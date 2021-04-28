@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
 
 export function login(req, res) {
@@ -19,7 +20,19 @@ export async function register(req, res) {
       message: 'This email already exist. Try another one.'
     });
   } else {
+    const salt = bcrypt.genSaltSync(10);
+    const password = req.body.password;
+    const user = new User({
+      email: req.body.email,
+      password: bcrypt.hashSync(password, salt),
+    });
 
+    try {
+      await user.save();
+      res.status(201).json(user);
+    } catch (e) {
+
+    }
   }
 }
 
