@@ -9,13 +9,18 @@ export function login(req, res) {
   })
 }
 
-export function register(req, res) {
-  const user = new User({
-    email: req.body.email,
-    password: req.body.password
+export async function register(req, res) {
+  const candidate = await User.findOne({
+    email: req.body.email
   });
 
-  user.save().then(() => console.log('User created'));
+  if (candidate) {
+    res.status(409).json({
+      message: 'This email already exist. Try another one.'
+    });
+  } else {
+
+  }
 }
 
 
