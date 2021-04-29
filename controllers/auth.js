@@ -1,13 +1,25 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
 
-export function login(req, res) {
-  res.status(200).json({
-    login: {
-      email: req.body.email,
-      password: req.body.password
+export async function login(req, res) {
+  const candidate = await User.findOne({
+    email: req.body.email
+  });
+
+  if (candidate) {
+    const passwordResult = bcrypt.compareSync(req.body.password, candidate.password);
+    if (passwordResult) {
+
+    } else {
+      res.status(401).json({
+        message: 'Passwords mismatch. Try again.'
+      });
     }
-  })
+  } else {
+    res.status(404).json({
+      message: 'User with this email not found.'
+    });
+  }
 }
 
 export async function register(req, res) {
