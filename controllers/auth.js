@@ -1,5 +1,7 @@
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import keys from '../config/keys.js';
 
 export async function login(req, res) {
   const candidate = await User.findOne({
@@ -9,7 +11,14 @@ export async function login(req, res) {
   if (candidate) {
     const passwordResult = bcrypt.compareSync(req.body.password, candidate.password);
     if (passwordResult) {
+      const token = jwt.sign({
+        email: candidate.email,
+        userId: candidate._id
+      }, keys.jwt, {expiresIn: 3600});
 
+      res.status(200).json({
+        token: `Bearer ${token}`
+      });
     } else {
       res.status(401).json({
         message: 'Passwords mismatch. Try again.'
