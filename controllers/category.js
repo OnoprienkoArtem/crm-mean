@@ -1,5 +1,5 @@
 export function getAll(req, res) {
-  res.status(200).json()
+  res.status(200).json({message: 'Categories'});
 }
 
 export function getById(req, res) {

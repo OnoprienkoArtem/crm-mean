@@ -10,6 +10,7 @@ import analyticsRoutes from './roures/analytics.js';
 import categoryRoutes from './roures/category.js';
 import orderRoutes from './roures/order.js';
 import positionRoutes from './roures/position.js';
+import jwtPassport from './middleware/passport.js';
 
 import keys from './config/keys.js';
 
@@ -20,6 +21,7 @@ mongoose.connect(keys.mongoURI)
   .catch(error => console.log(error));
 
 app.use(passport.initialize());
+jwtPassport(passport);
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
