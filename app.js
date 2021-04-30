@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import passport from 'passport';
 
 import authRoutes from './roures/auth.js';
 import analyticsRoutes from './roures/analytics.js';
@@ -17,6 +18,8 @@ const app = express();
 mongoose.connect(keys.mongoURI)
   .then(() => console.log('MongoDB connected.'))
   .catch(error => console.log(error));
+
+app.use(passport.initialize());
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
