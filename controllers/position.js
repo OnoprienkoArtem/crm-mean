@@ -43,9 +43,15 @@ export async function remove(req, res) {
   }
 }
 
-export function update(req, res) {
+export async function update(req, res) {
   try {
+    const position = await Position.findByIdAndUpdate(
+      { _id: req.params.id },
+      { $set: req.body },
+      { new: true }
+      );
 
+    res.status(200).json(position);
   } catch (e) {
     errorHandler(res, e);
   }
