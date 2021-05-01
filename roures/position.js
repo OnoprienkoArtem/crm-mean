@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get('/:categoryId', getByCategoryId);
 router.post('/', create);
-router.patch('/:id', update);
 router.delete('/:id', remove);
+router.patch('/:id', update);
 
 
 export default router;

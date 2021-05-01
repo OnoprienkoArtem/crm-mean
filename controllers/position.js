@@ -29,9 +29,15 @@ export async function create(req, res) {
   }
 }
 
-export function remove(req, res) {
+export async function remove(req, res) {
   try {
+    await Position.remove({
+      _id: req.params.id,
+    });
 
+    res.status(200).json({
+      message: 'Position has been deleted.',
+    });
   } catch (e) {
     errorHandler(res, e);
   }
