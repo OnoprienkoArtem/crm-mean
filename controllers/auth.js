@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import keys from '../config/keys.js';
+import { errorHandler } from '../utils/errorHandler.js';
 
 export async function login(req, res) {
   const candidate = await User.findOne({
@@ -52,7 +53,7 @@ export async function register(req, res) {
       await user.save();
       res.status(201).json(user);
     } catch (e) {
-
+      errorHandler(res, e);
     }
   }
 }
