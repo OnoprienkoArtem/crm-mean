@@ -14,15 +14,22 @@ export async function getByCategoryId(req, res) {
   }
 }
 
-export function remove(req, res) {
+export async function create(req, res) {
   try {
+    const position = await new Position({
+      name: req.body.name,
+      cost: req.body.cost,
+      category: req.body.category,
+      user: req.user.id,
+    }).save();
 
+    res.status(201).json(position);
   } catch (e) {
     errorHandler(res, e);
   }
 }
 
-export function create(req, res) {
+export function remove(req, res) {
   try {
 
   } catch (e) {
