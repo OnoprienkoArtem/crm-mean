@@ -1,4 +1,5 @@
 import Category from '../models/category.js';
+import Position from '../models/position.js';
 import { errorHandler } from '../utils/errorHandler.js';
 
 export async function getAll(req, res) {
@@ -23,9 +24,14 @@ export async function getById(req, res) {
   }
 }
 
-export function remove(req, res) {
+export async function remove(req, res) {
   try {
+    await Category.remove({_id: req.params.id});
+    await Position.remove({category: req.params.id});
 
+    res.status(200).json({
+      message: 'Category has been deleted.',
+    });
   } catch (e) {
     errorHandler(res, e);
   }
