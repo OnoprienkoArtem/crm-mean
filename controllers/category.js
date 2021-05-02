@@ -13,9 +13,11 @@ export async function getAll(req, res) {
   }
 }
 
-export function getById(req, res) {
+export async function getById(req, res) {
   try {
+    const category = await Category.findById(req.params.id);
 
+    res.status(200).json(category);
   } catch (e) {
     errorHandler(res, e);
   }
