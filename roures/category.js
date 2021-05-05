@@ -8,10 +8,10 @@ import {getAll, getById, remove, create, update} from '../controllers/category.j
 const router = express.Router();
 
 router.get('/', passport.authenticate('jwt', {session: false}), getAll);
-router.get('/:id', getById);
-router.delete('/:id', remove);
-router.post('/', upload.single('image'), create);
-router.patch('/:id', upload.single('image'), update);
+router.get('/:id', passport.authenticate('jwt', {session: false}), getById);
+router.delete('/:id', passport.authenticate('jwt', {session: false}), remove);
+router.post('/', passport.authenticate('jwt', {session: false}), upload.single('image'), create);
+router.patch('/:id', passport.authenticate('jwt', {session: false}), upload.single('image'), update);
 
 
 export default router;
