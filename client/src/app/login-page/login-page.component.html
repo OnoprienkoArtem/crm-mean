@@ -26,15 +26,26 @@
         formControlName="password"
         id="password"
         type="password"
+        [ngClass]="{'invalid': form.get('password').invalid && form.get('password').touched}"
       >
       <label for="password">Password:</label>
+      <span
+        class="helper-text red-text"
+        *ngIf="form.get('password').invalid && form.get('password').touched"
+      >
+        <span *ngIf="form.get('password').errors['required']">Password should not be empty.</span>
+        <span *ngIf="form.get('password').errors['minlength'] && form.get('password').errors['minlength']['requiredLength']">
+          Type correct length of password {{form.get('password').errors['minlength']['requiredLength']}}.
+          Now password consists of {{form.get('password').errors['minlength']['actualLength']}}
+        </span>
+      </span>
     </div>
   </div>
   <div class="card-action">
     <button
       class="modal-action btn waves-effect"
       type="submit"
-      [disabled]="form.invalid"
+      [disabled]="form?.invalid"
     >
       Login
     </button>
