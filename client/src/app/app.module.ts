@@ -8,7 +8,7 @@ import {LoginPageComponent} from './login-page/login-page.component';
 import {AuthLayoutComponent} from './shared/layouts/auth-layout/auth-layout.component';
 import {SiteLayoutComponent} from './shared/layouts/site-layout/site-layout.component';
 import {RegisterPageComponent} from './register-page/register-page.component';
-import {CheckFormFieldValidityDirective} from './shared/check-form-field-validity.directive';
+import {CheckFormFieldValidityDirective} from './shared/directives/check-form-field-validity.directive';
 
 @NgModule({
   declarations: [
