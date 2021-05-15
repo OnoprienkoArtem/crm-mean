@@ -34,15 +34,21 @@
         formControlName="password"
         id="password"
         type="password"
-        [ngClass]="{'invalid': form.get('password').invalid && form.get('password').touched}"
+        [ngClass]="{'invalid': password.invalid && password.touched}"
       >
       <label for="password">Password:</label>
       <span
         class="helper-text red-text"
         *ngIf="password.invalid && password.touched"
       >
-        <span *ngIf="password.errors.required">Password should not be empty.</span>
-        <span *ngIf="password.errors.minlength && password.errors.minlength.requiredLength">
+        <span
+          *ngIf="password.errors.required"
+        >
+          Password should not be empty.
+        </span>
+        <span
+          *ngIf="password.errors.minlength && password.errors.minlength.requiredLength"
+        >
           Type correct length of password {{password.errors.minlength.requiredLength}}.
           Now password consists of {{password.errors.minlength.actualLength}}
         </span>
