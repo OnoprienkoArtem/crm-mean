@@ -10,15 +10,23 @@
         formControlName="email"
         id="email"
         type="email"
-        [ngClass]="{'invalid': form.get('email').invalid && form.get('email').touched}"
+        [ngClass]="{'invalid': email.invalid && email.touched}"
       >
       <label for="email">Email:</label>
       <span
         class="helper-text red-text"
-        *ngIf="form.get('email').invalid && form.get('email').touched"
+        *ngIf="email.invalid && email.touched"
       >
-        <span *ngIf="form.get('email').errors['required']">Email should not be empty.</span>
-        <span *ngIf="form.get('email').errors['email']">Type correct email address.</span>
+        <span
+          *ngIf="email.errors.required"
+        >
+          Email should not be empty.
+        </span>
+        <span
+          *ngIf="email.errors.email"
+        >
+          Type correct email address.
+        </span>
       </span>
     </div>
     <div class="input-field">
@@ -31,12 +39,12 @@
       <label for="password">Password:</label>
       <span
         class="helper-text red-text"
-        *ngIf="form.get('password').invalid && form.get('password').touched"
+        *ngIf="password.invalid && password.touched"
       >
-        <span *ngIf="form.get('password').errors['required']">Password should not be empty.</span>
-        <span *ngIf="form.get('password').errors['minlength'] && form.get('password').errors['minlength']['requiredLength']">
-          Type correct length of password {{form.get('password').errors['minlength']['requiredLength']}}.
-          Now password consists of {{form.get('password').errors['minlength']['actualLength']}}
+        <span *ngIf="password.errors.required">Password should not be empty.</span>
+        <span *ngIf="password.errors.minlength && password.errors.minlength.requiredLength">
+          Type correct length of password {{password.errors.minlength.requiredLength}}.
+          Now password consists of {{password.errors.minlength.actualLength}}
         </span>
       </span>
     </div>
@@ -45,7 +53,7 @@
     <button
       class="modal-action btn waves-effect"
       type="submit"
-      [disabled]="form?.invalid"
+      [disabled]="form.invalid"
     >
       Login
     </button>
