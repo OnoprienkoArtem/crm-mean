@@ -10,7 +10,7 @@
         formControlName="email"
         id="email"
         type="email"
-        [ngClass]="{'invalid': email.invalid && email.touched}"
+        appCheckFormFieldValidity
       >
       <label for="email">Email:</label>
       <span
@@ -34,7 +34,7 @@
         formControlName="password"
         id="password"
         type="password"
-        [ngClass]="{'invalid': password.invalid && password.touched}"
+        appCheckFormFieldValidity
       >
       <label for="password">Password:</label>
       <span
