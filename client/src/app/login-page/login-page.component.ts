@@ -1,6 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
+export interface ErrorMessages {
+  required: string;
+  email: string;
+}
+
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -9,6 +14,11 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class LoginPageComponent implements OnInit {
 
   public form!: FormGroup;
+
+  public emailErrorMessages = {
+    required: 'Email should not be empty.',
+    email: 'Type correct email address.'
+  }
 
   constructor() {
   }
