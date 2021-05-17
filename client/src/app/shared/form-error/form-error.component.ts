@@ -1,10 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {AbstractControl, FormControl, ValidationErrors} from "@angular/forms";
-import {map, take} from "rxjs/operators";
-import {ErrorMessages} from "../../login-page/login-page.component";
-import {Observable, Subscription} from "rxjs";
-
-
+import {AbstractControl} from "@angular/forms";
+import {ErrorMessages} from "../../login-page/error-message.config";
 
 @Component({
   selector: 'form-error',
@@ -13,29 +9,20 @@ import {Observable, Subscription} from "rxjs";
 })
 export class FormErrorComponent implements OnInit {
 
+  texts: ErrorMessages[] | undefined;
+
   @Input() control!: AbstractControl;
-  @Input() errorMessages: any;
+  @Input() set errorMessages(errorMessages: ErrorMessages[]) {
 
+  };
 
-  // public text$: Observable<string> = this.getText();
 
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.texts)
 
-
-    //
-    // this.control.statusChanges.pipe().subscribe(() => {
-    //   console.log('statusChanges', this.control);
-    // });
-    //
-    this.control.valueChanges.pipe().subscribe(res => {
-      console.log('valueChanges', this.control)
-      console.log(res)
-
-
-    })
   }
 
 

@@ -1,16 +1,10 @@
-      <span
-        class="helper-text red-text"
-        *ngIf="control.invalid && control.touched"
-      >
-<!--        <span>{{text$ | async}}</span>-->
-<!--        <span-->
-<!--          *ngIf="control.errors.required"-->
-<!--        >-->
-<!--          Email should not be empty.-->
-<!--        </span>-->
-<!--        <span-->
-<!--          *ngIf="control.errors.email"-->
-<!--        >-->
-<!--          Type correct email address.-->
-<!--        </span>-->
-      </span>
+<span
+  class="helper-text red-text"
+  *ngIf="control.invalid && control.touched"
+>
+  <ng-container *ngFor="let message of texts">
+    <span *ngIf="control.errors[message.type]">
+       {{message.text}}
+    </span>
+  </ng-container>
+</span>

@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {EMAIL_ERROR_MESSAGES, PASSWORD_ERROR_MESSAGES} from "./error-message.config";
 
-export interface ErrorMessages {
-  required: string;
-  email: string;
-}
+
 
 @Component({
   selector: 'app-login-page',
@@ -14,14 +12,8 @@ export interface ErrorMessages {
 export class LoginPageComponent implements OnInit {
 
   public form!: FormGroup;
-
-  public emailErrorMessages = {
-    required: 'Email should not be empty.',
-    email: 'Type correct email address.'
-  }
-
-  constructor() {
-  }
+  public emailErrorMessages = EMAIL_ERROR_MESSAGES;
+  public passwordErrorMessages = PASSWORD_ERROR_MESSAGES;
 
   get email(): FormControl {
     return this.form.get('email') as FormControl;
