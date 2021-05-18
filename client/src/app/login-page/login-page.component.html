@@ -13,10 +13,17 @@
         appCheckFormFieldValidity
       >
       <label for="email">Email:</label>
-      <form-error
-        [control]="email"
-        [errorMessages]="emailErrorMessages"
-      ></form-error>
+      <span
+        class="helper-text red-text"
+        *ngIf="email.invalid && email.touched"
+      >
+        <span *ngIf="email.errors.required">
+          Email should not be empty.
+        </span>
+        <span *ngIf="email.errors.email">
+          Type correct email address.
+        </span>
+      </span>
     </div>
     <div class="input-field">
       <input
@@ -26,30 +33,18 @@
         appCheckFormFieldValidity
       >
       <label for="password">Password:</label>
-
-      <form-error
-        [control]="password"
-        [errorMessages]="passwordErrorMessages"
-      ></form-error>
-
-<!--      <span-->
-<!--        class="helper-text red-text"-->
-<!--        *ngIf="password.invalid && password.touched"-->
-<!--      >-->
-<!--        <span-->
-<!--          *ngIf="password.errors.required"-->
-<!--        >-->
-<!--          Password should not be empty.-->
-<!--        </span>-->
-<!--        <span-->
-<!--          *ngIf="password.errors.minlength && password.errors.minlength.requiredLength"-->
-<!--        >-->
-<!--          Type correct length of password {{password.errors.minlength.requiredLength}}.-->
-<!--          Now password consists of {{password.errors.minlength.actualLength}}-->
-<!--        </span>-->
-<!--      </span>-->
-
-
+      <span
+        class="helper-text red-text"
+        *ngIf="password.invalid && password.touched"
+      >
+        <span *ngIf="password.errors.required">
+          Password should not be empty.
+        </span>
+        <span *ngIf="password.errors.minlength && password.errors.minlength.requiredLength">
+          Type correct length of password {{password.errors.minlength.requiredLength}}.
+          Now password consists of {{password.errors.minlength.actualLength}}
+        </span>
+      </span>
     </div>
   </div>
   <div class="card-action">

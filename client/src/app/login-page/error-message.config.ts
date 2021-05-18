@@ -24,7 +24,5 @@ export const PASSWORD_ERROR_MESSAGES: ErrorMessages[] = [
   {
     type: 'password',
     text: 'Type correct length of password {{param1}}. Now password consists of {{param2}}',
-    param1: 'password.errors.minlength.requiredLength',
-    param2: 'password.errors.minlength.actualLength',
   },
 ]

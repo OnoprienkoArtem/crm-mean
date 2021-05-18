@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {EMAIL_ERROR_MESSAGES, PASSWORD_ERROR_MESSAGES} from "./error-message.config";
+import {EMAIL_ERROR_MESSAGES, ErrorMessages, PASSWORD_ERROR_MESSAGES} from "./error-message.config";
 
 
 
@@ -12,8 +12,6 @@ import {EMAIL_ERROR_MESSAGES, PASSWORD_ERROR_MESSAGES} from "./error-message.con
 export class LoginPageComponent implements OnInit {
 
   public form!: FormGroup;
-  public emailErrorMessages = EMAIL_ERROR_MESSAGES;
-  public passwordErrorMessages = PASSWORD_ERROR_MESSAGES;
 
   get email(): FormControl {
     return this.form.get('email') as FormControl;

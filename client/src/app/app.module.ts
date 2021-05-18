@@ -10,6 +10,7 @@ import {SiteLayoutComponent} from './shared/layouts/site-layout/site-layout.comp
 import {RegisterPageComponent} from './register-page/register-page.component';
 import {CheckFormFieldValidityDirective} from './shared/directives/check-form-field-validity.directive';
 import { FormErrorComponent } from './shared/form-error/form-error.component';
+import { FormErrorPipe } from './shared/pipes/form-error.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FormErrorComponent } from './shared/form-error/form-error.component';
     RegisterPageComponent,
     CheckFormFieldValidityDirective,
     FormErrorComponent,
+    FormErrorPipe,
   ],
   imports: [
     BrowserModule,

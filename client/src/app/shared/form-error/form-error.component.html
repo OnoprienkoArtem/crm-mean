@@ -1,8 +1,8 @@
 <span
   class="helper-text red-text"
-  *ngIf="control.invalid && control.touched"
+
 >
-  <ng-container *ngFor="let message of texts">
+  <ng-container *ngFor="let message of errorMessages">
     <span *ngIf="control.errors[message.type]">
        {{message.text}}
     </span>

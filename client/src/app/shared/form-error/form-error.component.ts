@@ -9,23 +9,10 @@ import {ErrorMessages} from "../../login-page/error-message.config";
 })
 export class FormErrorComponent implements OnInit {
 
-  texts: ErrorMessages[] | undefined;
-
   @Input() control!: AbstractControl;
-  @Input() set errorMessages(errorMessages: ErrorMessages[]) {
-
-  };
-
-
+  @Input() errorMessages!: ErrorMessages[];
 
   constructor() { }
 
-  ngOnInit(): void {
-    console.log(this.texts)
-
-  }
-
-
-
-
+  ngOnInit(): void { }
 }
