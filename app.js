@@ -16,9 +16,10 @@ import keys from './config/keys.js';
 
 const app = express();
 
-mongoose.connect(keys.mongoURI)
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true })
   .then(() => console.log('MongoDB connected.'))
   .catch(error => console.log(error));
+
 
 app.use(passport.initialize());
 jwtPassport(passport);
@@ -34,5 +35,7 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/position', positionRoutes);
+
+
 
 export default app;

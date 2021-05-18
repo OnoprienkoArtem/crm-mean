@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {EMAIL_ERROR_MESSAGES, ErrorMessages, PASSWORD_ERROR_MESSAGES} from "./error-message.config";
 
+import {AuthService} from "src/app/shared/services/auth.service";
 
 
 @Component({
@@ -12,6 +12,9 @@ import {EMAIL_ERROR_MESSAGES, ErrorMessages, PASSWORD_ERROR_MESSAGES} from "./er
 export class LoginPageComponent implements OnInit {
 
   public form!: FormGroup;
+
+  constructor(private auth: AuthService) {
+  }
 
   get email(): FormControl {
     return this.form.get('email') as FormControl;
@@ -26,7 +29,10 @@ export class LoginPageComponent implements OnInit {
   }
 
   public onSubmit(): void {
-
+    this.auth.login(this.form.value).subscribe(
+      () => console.log('Login succes'),
+      error => console.warn(error),
+    );
   }
 
   private initLoginForm(): void {
