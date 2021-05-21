@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
-import {AuthService} from "src/app/shared/services/auth.service";
+import {AuthService} from '@app/shared/services/auth.service';
 
 
 @Component({
