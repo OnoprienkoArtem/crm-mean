@@ -23,6 +23,14 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  get email(): FormControl {
+    return this.form.get('email') as FormControl;
+  }
+
+  get password(): FormControl {
+    return this.form.get('password') as FormControl;
+  }
+
   ngOnInit(): void {
     this.initLoginForm();
   }
