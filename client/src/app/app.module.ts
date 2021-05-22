@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -11,7 +12,6 @@ import {RegisterPageComponent} from './register-page/register-page.component';
 import {CheckFormFieldValidityDirective} from './shared/directives/check-form-field-validity.directive';
 import {FormErrorComponent} from './shared/form-error/form-error.component';
 import {FormErrorPipe} from './shared/pipes/form-error.pipe';
-import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [

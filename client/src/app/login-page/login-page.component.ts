@@ -1,19 +1,26 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
-import {AuthService} from '@app/shared/services/auth.service';
+import { AuthService } from '@app/shared/services/auth.service';
 
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss']
+  styleUrls: [ './login-page.component.scss' ]
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit, OnDestroy {
+  public form: FormGroup;
 
-  public form!: FormGroup;
+  private authSubscription: Subscription;
 
-  constructor(private auth: AuthService) {
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
   }
 
   get email(): FormControl {
@@ -28,17 +35,36 @@ export class LoginPageComponent implements OnInit {
     this.initLoginForm();
   }
 
+  public ngOnDestroy(): void {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+  }
+
   public onSubmit(): void {
-    this.auth.login(this.form.value).subscribe(
-      () => console.log('Login succes'),
-      error => console.warn(error),
+    this.form.disable();
+
+    this.authSubscription = this.auth.login(this.form.value).subscribe(
+      () => this.router.navigate([ '/overview' ]),
+      error => {
+        console.warn(error);
+        this.form.enable();
+      },
     );
   }
 
   private initLoginForm(): void {
     this.form = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      email: new FormControl(null, [ Validators.required, Validators.email ]),
+      password: new FormControl(null, [ Validators.required, Validators.minLength(6) ]),
+    });
+
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['registered']) {
+        // now you can login using your data
+      } else if (params['registered']) {
+        // you should login to the system
+      }
     });
   }
 }
