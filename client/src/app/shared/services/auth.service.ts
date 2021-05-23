@@ -24,7 +24,7 @@ export class AuthService {
     return this.token;
   }
 
-  private isAuthenticated(): boolean {
+  public isAuthenticated(): boolean {
     return !!this.token;
   }
 
