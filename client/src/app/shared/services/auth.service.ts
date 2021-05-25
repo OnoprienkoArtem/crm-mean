@@ -16,11 +16,11 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  private setToken(token: string | null) {
+  public setToken(token: string | null) {
     this.token = token;
   }
 
-  private getToken(): string | null {
+  public getToken(): string | null {
     return this.token;
   }
 
