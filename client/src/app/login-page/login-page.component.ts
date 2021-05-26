@@ -65,6 +65,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         MaterializeService.toast('Now you can login using your data.');
       } else if (params['accessDenied']) {
         MaterializeService.toast('You should login to the system.');
+      } else if (params['sessionFailed']) {
+        MaterializeService.toast('Please login again.');
       }
     });
   }
