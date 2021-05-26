@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MaterializeService } from '@app/shared/materialize/materialize.service';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '@app/shared/services/auth.service';
@@ -51,7 +52,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
         }
       }),
       error => {
-        console.warn(error);
+        MaterializeService.toast(error.error.message);
         this.form.enable();
       },
     );

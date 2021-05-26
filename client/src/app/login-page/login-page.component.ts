@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MaterializeService } from '@app/shared/materialize/materialize.service';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '@app/shared/services/auth.service';
@@ -47,7 +48,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.authSubscription = this.auth.login(this.form.value).subscribe(
       () => this.router.navigate([ '/overview' ]),
       error => {
-        console.warn(error);
+        MaterializeService.toast(error.error.message);
         this.form.enable();
       },
     );
@@ -61,9 +62,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
     this.route.queryParams.subscribe((params: Params) => {
       if (params['registered']) {
-        // now you can login using your data
+        MaterializeService.toast('Now you can login using your data.');
       } else if (params['accessDenied']) {
-        // you should login to the system
+        MaterializeService.toast('You should login to the system.');
       }
     });
   }
