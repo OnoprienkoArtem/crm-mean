@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginPageComponent, RegisterPageComponent } from '@app/auth/components';
 import { AuthGuard } from '@app/shared/guards/auth.guard';
 
-import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.component';
 import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component';
-import { RegisterPageComponent } from './register-page/register-page.component';
 
 const routes: Routes = [
   {
@@ -14,24 +13,17 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/login',
-        pathMatch: 'full'
+        loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
       },
-      {
-        path: 'login',
-        component: LoginPageComponent
-      },
-      {
-        path: 'register',
-        component: RegisterPageComponent
-      }
     ]
   },
   {
     path: '',
     component: SiteLayoutComponent,
     canActivate: [ AuthGuard ],
-    children: []
+    children: [
+
+    ]
   }
 ];
 

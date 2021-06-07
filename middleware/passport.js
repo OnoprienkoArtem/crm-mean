@@ -15,6 +15,7 @@ const jwtPassport = passport => {
     new JwtStrategy(options, async (payload, done) => {
       try {
         const user = await User.findById(payload.userId).select('email id');
+        console.log('User ===>', user)
 
         if (user) {
           done(null, user);

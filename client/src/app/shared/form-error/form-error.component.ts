@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {AbstractControl} from "@angular/forms";
-import {ErrorMessages} from "../../login-page/error-message.config";
 
 @Component({
   selector: 'form-error',
@@ -10,7 +9,6 @@ import {ErrorMessages} from "../../login-page/error-message.config";
 export class FormErrorComponent implements OnInit {
 
   @Input() control!: AbstractControl;
-  @Input() errorMessages!: ErrorMessages[];
 
   constructor() { }
 
