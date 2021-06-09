@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginPageComponent, RegisterPageComponent } from '@app/auth/components';
 import { AuthGuard } from '@app/shared/guards/auth.guard';
 
-import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.component';
-import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component';
+import { AuthLayoutComponent, SiteLayoutComponent } from '@app/shared/layouts';
 
 const routes: Routes = [
   {
@@ -22,7 +20,10 @@ const routes: Routes = [
     component: SiteLayoutComponent,
     canActivate: [ AuthGuard ],
     children: [
-
+      {
+        path: 'overview',
+        loadChildren: () => import('./overview/overview.module').then(m => m.OverviewModule)
+      },
     ]
   }
 ];

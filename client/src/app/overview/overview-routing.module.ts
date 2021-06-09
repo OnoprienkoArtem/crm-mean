@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { OverviewPageComponent } from '@app/overview/components/overview-page';
+
+const routes: Routes = [
+  {
+    path: 'overview',
+    component: OverviewPageComponent
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

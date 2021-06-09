@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { LoginPageComponent, RegisterPageComponent } from '@app/auth/components';
 
 const routes: Routes = [

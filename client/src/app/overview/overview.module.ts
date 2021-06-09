@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { OverviewRoutingModule } from './overview-routing.module';
+import { OverviewRoutingModule } from '@app/overview/overview-routing.module';
+
+import { OverviewPageComponent } from '@app/overview/components';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    OverviewPageComponent
+  ],
   imports: [
     CommonModule,
     OverviewRoutingModule

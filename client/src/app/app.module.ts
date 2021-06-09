@@ -5,13 +5,15 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { TokenInterceptor } from '@app/shared/interceptors/token.interceptor';
 import { AuthModule } from '@app/auth';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.component';
-import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component';
-import { CheckFormFieldValidityDirective } from './shared/directives/check-form-field-validity.directive';
-import { FormErrorComponent } from './shared/form-error/form-error.component';
-import { FormErrorPipe } from './shared/pipes/form-error.pipe';
+import { AppRoutingModule } from '@app/app-routing.module';
+
+import { AppComponent } from '@app/app.component';
+import { AuthLayoutComponent } from '@app/shared/layouts/auth-layout/auth-layout.component';
+import { SiteLayoutComponent } from '@app/shared/layouts/site-layout/site-layout.component';
+import { CheckFormFieldValidityDirective } from '@app/shared/directives/check-form-field-validity.directive';
+import { FormErrorComponent } from '@app/shared/form-error/form-error.component';
+
+import { FormErrorPipe } from '@app/shared/pipes/form-error.pipe';
 
 @NgModule({
   declarations: [
