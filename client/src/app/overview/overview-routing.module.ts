@@ -5,7 +5,7 @@ import { OverviewPageComponent } from '@app/overview/components/overview-page';
 
 const routes: Routes = [
   {
-    path: 'overview',
+    path: '',
     component: OverviewPageComponent
   },
 ];
