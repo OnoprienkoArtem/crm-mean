@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { MaterializeService } from '@app/shared/materialize/materialize.service';
 import { AuthService } from '@app/shared/services/auth.service';
 
 interface SideMenu {
@@ -13,7 +14,9 @@ interface SideMenu {
   templateUrl: './site-layout.component.html',
   styleUrls: [ './site-layout.component.scss' ]
 })
-export class SiteLayoutComponent implements OnInit {
+export class SiteLayoutComponent implements AfterViewInit {
+
+  @ViewChild('floatingButton') floatingButton: ElementRef;
 
   public links: Array<SideMenu> = [
     {url: '/overview', name: 'Overview'},
@@ -23,10 +26,14 @@ export class SiteLayoutComponent implements OnInit {
     {url: '/categories', name: 'Categories'},
   ];
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+  ) {
   }
 
-  public ngOnInit(): void {
+  public ngAfterViewInit(): void {
+    MaterializeService.initializeFloatingButton(this.floatingButton);
   }
 
   public logout(e: Event): void {

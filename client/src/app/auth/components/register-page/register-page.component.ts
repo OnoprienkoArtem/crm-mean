@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MaterializeService } from '@app/shared/materialize/materialize.service';
 import { Subscription } from 'rxjs';
 
+import { MaterializeService } from '@app/shared/materialize/materialize.service';
 import { AuthService } from '@app/shared/services/auth.service';
 
 
