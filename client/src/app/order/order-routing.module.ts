@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { OrderPageComponent } from '@app/order/components';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: OrderPageComponent,
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

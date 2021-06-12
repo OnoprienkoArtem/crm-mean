@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HistoryRoutingModule } from './history-routing.module';
-import { HistoryPageComponent } from './components/history-page/history-page.component';
+import { HistoryRoutingModule } from '@app/history';
+
+import { HistoryPageComponent } from '@app/history/components';
+
 
 
 @NgModule({

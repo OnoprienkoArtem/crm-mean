@@ -10,8 +10,9 @@ import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
 import { AuthLayoutComponent } from '@app/shared/layouts/auth-layout/auth-layout.component';
 import { SiteLayoutComponent } from '@app/shared/layouts/site-layout/site-layout.component';
-import { CheckFormFieldValidityDirective } from '@app/shared/directives/check-form-field-validity.directive';
 import { FormErrorComponent } from '@app/shared/form-error/form-error.component';
+
+import { CheckFormFieldValidityDirective } from '@app/shared/directives/check-form-field-validity.directive';
 
 import { FormErrorPipe } from '@app/shared/pipes/form-error.pipe';
 
