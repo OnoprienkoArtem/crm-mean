@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HistoryRoutingModule } from '@app/history';
+import { HistoryRoutingModule } from '@app/history/history-routing.module';
 
 import { HistoryPageComponent } from '@app/history/components';
 
