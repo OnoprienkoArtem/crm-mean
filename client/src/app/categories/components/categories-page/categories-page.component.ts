@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { CategoriesService } from '@app/shared/services/categories.service';
+
 @Component({
   selector: 'app-categories-page',
   templateUrl: './categories-page.component.html',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriesPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private categoriesService: CategoriesService) { }
 
   ngOnInit(): void {
+    this.categoriesService.fetch().subscribe(categories => {
+      console.log(categories);
+    });
   }
 
 }
