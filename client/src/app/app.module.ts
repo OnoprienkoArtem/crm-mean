@@ -8,8 +8,8 @@ import { AuthModule } from '@app/auth';
 import { AppRoutingModule } from '@app/app-routing.module';
 
 import { AppComponent } from '@app/app.component';
-import { AuthLayoutComponent } from '@app/shared/layouts/auth-layout/auth-layout.component';
-import { SiteLayoutComponent } from '@app/shared/layouts/site-layout/site-layout.component';
+import { AuthLayoutComponent } from '@app/layouts/auth-layout/auth-layout.component';
+import { SiteLayoutComponent } from '@app/layouts/site-layout/site-layout.component';
 import { FormErrorComponent } from '@app/shared/form-error/form-error.component';
 
 import { CheckFormFieldValidityDirective } from '@app/shared/directives/check-form-field-validity.directive';
