@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from '@app/shared/interfaces/category';
 
 import { CategoriesService } from '@app/shared/services/categories.service';
 
@@ -9,11 +10,14 @@ import { CategoriesService } from '@app/shared/services/categories.service';
 })
 export class CategoriesPageComponent implements OnInit {
 
+  public categories: Category[];
+
   constructor(private categoriesService: CategoriesService) { }
 
   ngOnInit(): void {
     this.categoriesService.fetch().subscribe(categories => {
       console.log(categories);
+      this.categories = categories;
     });
   }
 
