@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CategoriesPageComponent } from '@app/categories/components';
+import { CategoriesNewComponent, CategoriesPageComponent } from '@app/categories/components';
 
 
 const routes: Routes = [
   {
     path: '',
     component: CategoriesPageComponent,
+  },
+  {
+    path: 'new',
+    component: CategoriesNewComponent,
   }
 ];
 
