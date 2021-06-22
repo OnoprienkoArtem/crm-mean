@@ -12,6 +12,10 @@ const routes: Routes = [
   {
     path: 'new',
     component: CategoriesNewComponent,
+  },
+  {
+    path: ':id',
+    component: CategoriesNewComponent,
   }
 ];
 
