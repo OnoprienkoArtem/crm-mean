@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-categories-new',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriesNewComponent implements OnInit {
 
-  constructor() { }
+  public isNew: boolean = true;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe((params: Params) => {
+      if (params['id']) {
+        this.isNew = false;
+      }
+    });
   }
 
 }

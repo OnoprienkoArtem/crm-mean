@@ -1,8 +1,8 @@
 <div class="page-title">
   <h4>
-    <a href="#">Категории</a>
+    <a routerLink="/categories">Categories</a>
     <i class="material-icons">keyboard_arrow_right</i>
-    Добавить категорию
+    {{isNew ? 'Add' : 'Edit'}} category
   </h4>
   <span>
     <button class="btn btn-small red">
@@ -15,19 +15,19 @@
   <div class="col s12 l6">
     <div class="input-field">
       <input id="name" type="text" required>
-      <label for="name">Название</label>
+      <label for="name">Name</label>
     </div>
 
     <div>
       <button class="waves-effect waves-light btn orange lighten-2 mb2">
         <i class="material-icons left">backup</i>
-        Загрузить изображение
+        Upload image
       </button>
     </div>
 
     <div>
       <button class="waves-effect waves-light btn">
-        Сохранить изменения
+        Save changes
       </button>
     </div>
   </div>
