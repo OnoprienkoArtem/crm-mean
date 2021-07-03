@@ -11,7 +11,10 @@ export class CategoriesNewComponent implements OnInit {
   public form: FormGroup;
   public isNew: boolean = true;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
