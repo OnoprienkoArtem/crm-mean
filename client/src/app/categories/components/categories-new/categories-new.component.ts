@@ -1,6 +1,14 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Category } from '@app/shared/interfaces/category';
+import { MaterializeService } from '@app/shared/materialize/materialize.service';
+
+import { CategoriesService } from '@app/shared/services';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-categories-new',
@@ -13,21 +21,43 @@ export class CategoriesNewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-
+    private categoriesService: CategoriesService,
   ) { }
 
   ngOnInit(): void {
     this.initializeForm();
-
-    this.route.params.subscribe((params: Params) => {
-      if (params['id']) {
-        this.isNew = false;
-      }
-    });
+    this.getCategoryById();
   }
 
   public onSubmit(): void {
 
+  }
+
+  private getCategoryById(): void {
+    this.form.disable();
+
+    this.route.params.pipe(
+      switchMap((params: Params): Observable<Category | null> => {
+        if (params['id']) {
+          this.isNew = false;
+          return this.categoriesService.getById(params['id']);
+        }
+
+        return of(null);
+      })
+    ).subscribe(
+      (category: Category | null): void => {
+        if (category) {
+          this.form.patchValue({
+            name: category.name,
+          });
+
+          MaterializeService.updateTextInputs();
+        }
+        this.form.enable();
+      },
+      (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
+    );
   }
 
   private initializeForm(): void {
