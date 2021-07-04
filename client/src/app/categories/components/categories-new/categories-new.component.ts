@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Category } from '@app/shared/interfaces/category';
@@ -18,6 +18,8 @@ import { switchMap } from 'rxjs/operators';
 export class CategoriesNewComponent implements OnInit {
   public form: FormGroup;
   public isNew: boolean = true;
+
+  @ViewChild('fileInput') fileInputRef: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -67,4 +69,7 @@ export class CategoriesNewComponent implements OnInit {
   }
 
 
+  public triggerClick(): void {
+    this.fileInputRef.nativeElement.click();
+  }
 }

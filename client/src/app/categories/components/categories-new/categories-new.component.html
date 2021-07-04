@@ -33,7 +33,14 @@
       </div>
 
       <div>
+        <input
+          #fileInput
+          type="file"
+          class="dn"
+        >
         <button
+          (click)="triggerClick()"
+          [disabled]="form.disabled"
           class="waves-effect waves-light btn orange lighten-2 mb2"
           type="button"
         >
