@@ -18,6 +18,9 @@ import { switchMap } from 'rxjs/operators';
 export class CategoriesNewComponent implements OnInit {
   public form: FormGroup;
   public isNew: boolean = true;
+  public imagePreview: string | ArrayBuffer | null = '';
+
+  private image: File;
 
   @ViewChild('fileInput') fileInputRef: ElementRef;
 
@@ -71,5 +74,13 @@ export class CategoriesNewComponent implements OnInit {
 
   public triggerClick(): void {
     this.fileInputRef.nativeElement.click();
+  }
+
+  public onFileUpload(event: any): void {
+    this.image = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => this.imagePreview = reader.result;
+    reader.readAsDataURL(this.image);
   }
 }
