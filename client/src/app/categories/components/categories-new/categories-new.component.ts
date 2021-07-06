@@ -56,7 +56,7 @@ export class CategoriesNewComponent implements OnInit {
           this.form.patchValue({
             name: category.name,
           });
-
+          this.imagePreview = category.imageSrc!;
           MaterializeService.updateTextInputs();
         }
         this.form.enable();
