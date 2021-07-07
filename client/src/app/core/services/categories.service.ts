@@ -9,14 +9,15 @@ import { Category } from '@app/shared/interfaces/category';
 })
 export class CategoriesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   public fetch(): Observable<Category[]> {
     return this.http.get<Category[]>('/api/category');
   }
 
   public getById(id: string): Observable<Category> {
-    return this.http.get<Category>(`/api/category/${id}`);
+    return this.http.get<Category>(`/api/category/${ id }`);
   }
 
   public create(name: string, image?: File): Observable<Category> {
@@ -30,7 +31,7 @@ export class CategoriesService {
     return this.http.post<Category>('/api/category', fd);
   }
 
-  public update(id: string, name: string, image?: File): Observable<Category> {
+  public update(id: string | null, name: string, image?: File): Observable<Category> {
     const fd = new FormData();
 
     if (image) {
@@ -38,6 +39,6 @@ export class CategoriesService {
     }
     fd.append('image', name);
 
-    return this.http.patch<Category>(`/api/category${id}`, fd);
+    return this.http.patch<Category>(`/api/category/${ id }`, fd);
   }
 }

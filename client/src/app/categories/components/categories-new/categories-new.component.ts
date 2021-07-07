@@ -13,7 +13,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-categories-new',
   templateUrl: './categories-new.component.html',
-  styleUrls: ['./categories-new.component.scss']
+  styleUrls: [ './categories-new.component.scss' ]
 })
 export class CategoriesNewComponent implements OnInit {
   public form: FormGroup;
@@ -27,7 +27,8 @@ export class CategoriesNewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private categoriesService: CategoriesService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -35,7 +36,44 @@ export class CategoriesNewComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    let observable$: Observable<Category>;
+    this.form.disable();
 
+    if (this.isNew) {
+      observable$ = this.categoriesService.create(this.form.value.name, this.image);
+    } else {
+      const id: string | null = this.route.snapshot.paramMap.get('id');
+      observable$ = this.categoriesService.update(id, this.form.value.name, this.image);
+    }
+
+    observable$.subscribe(
+      (): void => {
+        MaterializeService.toast('Changes saved!');
+        this.form.enable();
+      },
+      (error: HttpErrorResponse): void => {
+        MaterializeService.toast(error.error.message);
+        this.form.enable();
+      },
+    );
+  }
+
+  public triggerClick(): void {
+    this.fileInputRef.nativeElement.click();
+  }
+
+  public onFileUpload(event: any): void {
+    this.image = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => this.imagePreview = reader.result;
+    reader.readAsDataURL(this.image);
+  }
+
+  private initializeForm(): void {
+    this.form = new FormGroup({
+      name: new FormControl(null, Validators.required),
+    });
   }
 
   private getCategoryById(): void {
@@ -63,24 +101,5 @@ export class CategoriesNewComponent implements OnInit {
       },
       (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
     );
-  }
-
-  private initializeForm(): void {
-    this.form = new FormGroup({
-      name: new FormControl(null, Validators.required),
-    });
-  }
-
-
-  public triggerClick(): void {
-    this.fileInputRef.nativeElement.click();
-  }
-
-  public onFileUpload(event: any): void {
-    this.image = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = () => this.imagePreview = reader.result;
-    reader.readAsDataURL(this.image);
   }
 }
