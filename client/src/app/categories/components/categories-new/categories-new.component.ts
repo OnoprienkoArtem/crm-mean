@@ -5,7 +5,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Category } from '@app/shared/interfaces/category';
 import { MaterializeService } from '@app/shared/materialize/materialize.service';
 
-import { CategoriesService } from '@app/shared/services';
+import { CategoriesService } from '@app/core/services';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 

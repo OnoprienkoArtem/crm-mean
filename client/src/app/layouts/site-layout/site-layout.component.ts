@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MaterializeService } from '@app/shared/materialize/materialize.service';
-import { AuthService } from '@app/shared/services/auth.service';
+import { AuthService } from '@app/core/services/auth.service';
 
 interface SideMenu {
   url: string;

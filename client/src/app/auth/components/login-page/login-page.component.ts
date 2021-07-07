@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { MaterializeService } from '@app/shared/materialize/materialize.service';
-import { AuthService } from '@app/shared/services/auth.service';
+import { AuthService } from '@app/core/services/auth.service';
 
 
 @Component({
