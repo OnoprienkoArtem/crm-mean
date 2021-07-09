@@ -26,18 +26,18 @@ export class CategoriesService {
     if (image) {
       fd.append('image', image, image.name);
     }
-    fd.append('image', name);
+    fd.append('name', name);
 
     return this.http.post<Category>('/api/category', fd);
   }
 
-  public update(id: string | null, name: string, image?: File): Observable<Category> {
+  public update(id: string | undefined, name: string, image?: File): Observable<Category> {
     const fd = new FormData();
 
     if (image) {
       fd.append('image', image, image.name);
     }
-    fd.append('image', name);
+    fd.append('name', name);
 
     return this.http.patch<Category>(`/api/category/${ id }`, fd);
   }
