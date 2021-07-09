@@ -21,7 +21,6 @@ export class CategoriesNewComponent implements OnInit {
   public imagePreview: string | ArrayBuffer | null = '';
 
   private image: File;
-  private category: Category;
 
   @ViewChild('fileInput') fileInputRef: ElementRef;
 
@@ -44,13 +43,11 @@ export class CategoriesNewComponent implements OnInit {
       observable$ = this.categoriesService.create(this.form.value.name, this.image);
     } else {
       const id: string | null = this.route.snapshot.paramMap.get('id');
-      observable$ = this.categoriesService.update(this.category._id, this.form.value.name, this.image);
+      observable$ = this.categoriesService.update(id, this.form.value.name, this.image);
     }
 
     observable$.subscribe(
-      (category: Category): void => {
-        console.log(category);
-        this.category = category;
+      (): void => {
         MaterializeService.toast('Changes saved!');
         this.form.enable();
       },
@@ -94,7 +91,6 @@ export class CategoriesNewComponent implements OnInit {
     ).subscribe(
       (category: Category | null): void => {
         if (category) {
-          this.category = category;
           this.form.patchValue({
             name: category.name,
           });

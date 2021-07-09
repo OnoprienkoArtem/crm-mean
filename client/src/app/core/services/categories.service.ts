@@ -31,7 +31,7 @@ export class CategoriesService {
     return this.http.post<Category>('/api/category', fd);
   }
 
-  public update(id: string | undefined, name: string, image?: File): Observable<Category> {
+  public update(id: string | null, name: string, image?: File): Observable<Category> {
     const fd = new FormData();
 
     if (image) {
