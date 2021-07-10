@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ModalConfirmComponent } from '@app/shared/components';
 import { Category } from '@app/shared/interfaces/category';
 import { MaterializeService } from '@app/shared/materialize/materialize.service';
 
@@ -27,6 +29,7 @@ export class CategoriesNewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private categoriesService: CategoriesService,
+    public dialog: MatDialog,
   ) {
   }
 
@@ -104,6 +107,12 @@ export class CategoriesNewComponent implements OnInit {
   }
 
   public deleteCategory(): void {
+    const dialogRef = this.dialog.open(ModalConfirmComponent, {
+      data: { name: this.category.name },
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
