@@ -23,6 +23,7 @@ export class CategoriesNewComponent implements OnInit {
   public imagePreview: string | ArrayBuffer | null = '';
 
   private image: File;
+  private category: Category;
 
   @ViewChild('fileInput') fileInputRef: ElementRef;
 
@@ -94,6 +95,7 @@ export class CategoriesNewComponent implements OnInit {
     ).subscribe(
       (category: Category | null): void => {
         if (category) {
+          this.category = category;
           this.form.patchValue({
             name: category.name,
           });
@@ -108,11 +110,13 @@ export class CategoriesNewComponent implements OnInit {
 
   public deleteCategory(): void {
     const dialogRef = this.dialog.open(ModalConfirmComponent, {
-      data: { name: this.category.name },
+      data: {
+        name: this.category.name,
+      },
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      console.log(`Dialog result: ${ result }`);
     });
   }
 }
