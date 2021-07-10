@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { CategoriesRoutingModule } from '@app/categories/categories-routing.module';
 
@@ -18,7 +19,7 @@ import { SharedModule } from '@app/shared';
     CommonModule,
     CategoriesRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class CategoriesModule {

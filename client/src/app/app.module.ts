@@ -9,6 +9,7 @@ import { AppRoutingModule } from '@app/app-routing.module';
 
 import { AppComponent } from '@app/app.component';
 import { AuthLayoutComponent, SiteLayoutComponent } from '@app/layouts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [ AppComponent, AuthLayoutComponent, SiteLayoutComponent ],
@@ -20,6 +21,7 @@ import { AuthLayoutComponent, SiteLayoutComponent } from '@app/layouts';
     HttpClientModule,
     AuthModule,
     CoreModule,
+    BrowserAnimationsModule,
   ],
   bootstrap: [ AppComponent ]
 })

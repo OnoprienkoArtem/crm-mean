@@ -102,4 +102,8 @@ export class CategoriesNewComponent implements OnInit {
       (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
     );
   }
+
+  public deleteCategory(): void {
+
+  }
 }
