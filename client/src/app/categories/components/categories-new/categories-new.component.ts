@@ -2,14 +2,15 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModalConfirmComponent } from '@app/shared/components';
+import { Message } from '@app/shared/interfaces';
 import { Category } from '@app/shared/interfaces/category';
 import { MaterializeService } from '@app/shared/materialize/materialize.service';
 
 import { CategoriesService } from '@app/core/services';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { catchError, filter, switchMap, tap } from 'rxjs/operators';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class CategoriesNewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private categoriesService: CategoriesService,
     public dialog: MatDialog,
   ) {
@@ -115,8 +117,12 @@ export class CategoriesNewComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${ result }`);
-    });
+    dialogRef.afterClosed().pipe(
+      filter(Boolean),
+      switchMap((): Observable<Message> => this.categoriesService.delete(this.category._id)),
+      tap((message: Message): void => MaterializeService.toast(message.message)),
+      catchError((error: HttpErrorResponse): Observable<void> => of(MaterializeService.toast(error.error.message))),
+      tap((): Promise<boolean> => this.router.navigate(['/categories'])),
+    ).subscribe();
   }
 }
