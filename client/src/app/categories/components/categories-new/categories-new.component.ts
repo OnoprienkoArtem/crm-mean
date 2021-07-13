@@ -9,7 +9,7 @@ import { Category } from '@app/shared/interfaces/category';
 import { MaterializeService } from '@app/shared/materialize/materialize.service';
 
 import { CategoriesService } from '@app/core/services';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, filter, switchMap, tap } from 'rxjs/operators';
 
 
@@ -121,8 +121,11 @@ export class CategoriesNewComponent implements OnInit {
       filter(Boolean),
       switchMap((): Observable<Message> => this.categoriesService.delete(this.category._id)),
       tap((message: Message): void => MaterializeService.toast(message.message)),
-      catchError((error: HttpErrorResponse): Observable<void> => of(MaterializeService.toast(error.error.message))),
-      tap((): Promise<boolean> => this.router.navigate(['/categories'])),
+      tap((): Promise<boolean> => this.router.navigate([ '/categories' ])),
+      catchError((error: HttpErrorResponse): Observable<HttpErrorResponse> => {
+        MaterializeService.toast(error.error.message);
+        return throwError(error.error.message);
+      }),
     ).subscribe();
   }
 }
