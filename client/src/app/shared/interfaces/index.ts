@@ -1,3 +1,4 @@
-export * from './message';
-export * from './user';
-export * from './category';
+export * from './Message';
+export * from './User';
+export * from './Category';
+export * from './Position';

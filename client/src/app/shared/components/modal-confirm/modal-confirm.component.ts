@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Category } from '@app/shared/interfaces/category';
+import { Category } from '@app/shared/interfaces/Category';
 
 @Component({
   selector: 'app-modal-confirm',

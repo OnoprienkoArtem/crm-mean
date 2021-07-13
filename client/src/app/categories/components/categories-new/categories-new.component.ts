@@ -5,12 +5,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModalConfirmComponent } from '@app/shared/components';
 import { Message } from '@app/shared/interfaces';
-import { Category } from '@app/shared/interfaces/category';
+import { Category } from '@app/shared/interfaces/Category';
 import { MaterializeService } from '@app/shared/materialize/materialize.service';
 
-import { CategoriesService } from '@app/core/services';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, filter, switchMap, tap } from 'rxjs/operators';
+
+import { CategoriesService } from '@app/core/services';
 
 
 @Component({
@@ -22,9 +23,9 @@ export class CategoriesNewComponent implements OnInit {
   public form: FormGroup;
   public isNew: boolean = true;
   public imagePreview: string | ArrayBuffer | null = '';
+  public category: Category;
 
   private image: File;
-  private category: Category;
 
   @ViewChild('fileInput') fileInputRef: ElementRef;
 
