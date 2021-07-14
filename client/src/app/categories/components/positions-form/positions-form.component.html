@@ -6,18 +6,28 @@
         Добавить позицию
       </button>
     </div>
-
-    <div class="collection">
-      <a class="collection-item collection-item-icon">
+    <div *ngIf="!loading; else loader">
+      <div class="collection" *ngIf="positions.length !== 0; else empty">
+        <a
+          class="collection-item collection-item-icon"
+          *ngFor="let position of positions"
+        >
         <span>
-          Кофе <strong>20 руб.</strong>
+          {{position.name}} <strong>{{position.cost}}$</strong>
         </span>
-        <span>
+          <span>
           <i class="material-icons">delete</i>
         </span>
-      </a>
+        </a>
+      </div>
+      <ng-template #empty>
+        <div>This category has no positions.</div>
+      </ng-template>
     </div>
   </div>
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
 </div>
 
 <div id="create-modal" class="modal">
