@@ -8,8 +8,8 @@ import { Position } from '@app/shared/interfaces';
   styleUrls: ['./positions-form.component.scss']
 })
 export class PositionsFormComponent implements OnInit {
-
   public positions: Position[] = [];
+  public loading: boolean = false;
 
   @Input() categoryId: string
 
@@ -17,8 +17,10 @@ export class PositionsFormComponent implements OnInit {
   constructor(private positionService: PositionsService) { }
 
   ngOnInit(): void {
-    this.positionService.fetch(this.categoryId).subscribe((position: Position[]) => {
-
+    this.loading = true;
+    this.positionService.fetch(this.categoryId).subscribe((positions: Position[]) => {
+      this.positions = positions;
+      this.loading = false;
     });
   }
 
