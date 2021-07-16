@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PositionsService } from '@app/core/services';
 import { Position } from '@app/shared/interfaces';
 import { MaterializeModalInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
@@ -12,6 +13,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   public positions: Position[] = [];
   public loading: boolean = false;
   public modal: MaterializeModalInstance;
+  public form: FormGroup;
 
   @Input() categoryId: string
 
@@ -20,6 +22,8 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   constructor(private positionService: PositionsService) { }
 
   ngOnInit(): void {
+    this.initializeForm();
+
     this.loading = true;
     this.positionService.fetch(this.categoryId).subscribe((positions: Position[]) => {
       this.positions = positions;
@@ -45,5 +49,20 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
 
   public onCancel(): void {
     this.modal.close();
+  }
+
+  public onSubmit(): void {
+
+  }
+
+  public onDelete(): void {
+
+  }
+
+  private initializeForm(): void {
+    this.form = new FormGroup({
+      name: new FormControl(null, Validators.required),
+      cost: new FormControl(null, [Validators.required, Validators.min(1)]),
+    });
   }
 }
