@@ -114,7 +114,7 @@ export class CategoriesNewComponent implements OnInit {
   public deleteCategory(): void {
     const dialogRef = this.dialog.open(ModalConfirmComponent, {
       data: {
-        text: `Are you sure you want to delete the category ${this.category.name}'?`,
+        text: `Are you sure you want to delete the category ${this.category.name}?`,
       },
     });
 

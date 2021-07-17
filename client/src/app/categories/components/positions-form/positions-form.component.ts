@@ -120,10 +120,11 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
-  public onDeletePosition(position: Position): void {
+  public onDeletePosition(event: Event, position: Position): void {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(ModalConfirmComponent, {
       data: {
-        text: `Are you sure you want to delete the position ${position.name}'?`,
+        text: `Are you sure you want to delete the position ${position.name}?`,
       },
     });
 
