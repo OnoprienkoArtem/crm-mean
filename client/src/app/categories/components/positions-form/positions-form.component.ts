@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PositionsService } from '@app/core/services';
 import { Position } from '@app/shared/interfaces';
@@ -15,7 +25,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   public modal: MaterializeModalInstance;
   public form: FormGroup;
 
-  @Input() categoryId: string
+  @Input() categoryId: string;
 
   @ViewChild('modal') modalRef: ElementRef;
 
@@ -52,7 +62,29 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public onSubmit(): void {
+    this.form.disable();
 
+    const newPosition: Position = {
+      name: this.form.value.name,
+      cost: this.form.value.cost,
+      category: this.categoryId,
+    };
+
+    this.positionService.create(newPosition).subscribe(
+      (position: Position): void => {
+        MaterializeService.toast('Position was created');
+        this.positions.push(position);
+      },
+      (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
+      (): void => {
+        this.modal.close();
+        this.form.reset({
+          name: '',
+          cost: 1,
+        });
+        this.form.enable();
+      },
+    );
   }
 
   public onDeletePosition(position: Position): void {
@@ -62,7 +94,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   private initializeForm(): void {
     this.form = new FormGroup({
       name: new FormControl(null, Validators.required),
-      cost: new FormControl(null, [Validators.required, Validators.min(1)]),
+      cost: new FormControl(1, [Validators.required, Validators.min(1)]),
     });
   }
 }
