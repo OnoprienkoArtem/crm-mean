@@ -1,6 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Category } from '@app/shared/interfaces/Category';
+
+interface DialogData {
+  text: string;
+}
 
 @Component({
   selector: 'app-modal-confirm',
@@ -9,7 +12,7 @@ import { Category } from '@app/shared/interfaces/Category';
 })
 export class ModalConfirmComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Category) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit(): void {
   }
