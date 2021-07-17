@@ -81,22 +81,25 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       category: this.categoryId,
     };
 
-
+    const completed = () => {
+      this.modal.close();
+      this.form.reset({
+        name: '',
+        cost: 1,
+      });
+      this.form.enable();
+    }
 
     if (this.positionId) {
+      newPosition._id = this.positionId;
       this.positionService.update(newPosition).subscribe(
         (position: Position): void => {
+          const idx: number = this.positions.findIndex((p: Position): boolean => p._id === position._id);
+          this.positions[idx] = position;
           MaterializeService.toast('Changes saved');
         },
         (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
-        (): void => {
-          this.modal.close();
-          this.form.reset({
-            name: '',
-            cost: 1,
-          });
-          this.form.enable();
-        },
+        completed,
       );
     } else {
       this.positionService.create(newPosition).subscribe(
@@ -105,14 +108,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
           this.positions.push(position);
         },
         (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
-        (): void => {
-          this.modal.close();
-          this.form.reset({
-            name: '',
-            cost: 1,
-          });
-          this.form.enable();
-        },
+        completed,
       );
     }
   }

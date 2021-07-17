@@ -37,7 +37,7 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="modal" #modal>
     <div class="modal-content">
-      <h4 class="mb1">Add position</h4>
+      <h4 class="mb1">{{positionId ? 'Edit' : 'Add'}} position</h4>
       <div class="input-field">
         <input
           id="pos-name"
