@@ -55,7 +55,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
 
   }
 
-  public onDelete(): void {
+  public onDeletePosition(position: Position): void {
 
   }
 
