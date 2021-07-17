@@ -22,6 +22,7 @@ import { MaterializeModalInstance, MaterializeService } from '@app/shared/materi
 export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy {
   public positions: Position[] = [];
   public loading: boolean = false;
+  public positionId: string | undefined | null;
   public modal: MaterializeModalInstance;
   public form: FormGroup;
 
@@ -50,11 +51,21 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public onSelectPosition(position: Position): void {
+    this.positionId = position._id;
+    this.form.patchValue({
+      name: position.name,
+      cost: position.cost,
+    });
+
     this.modal.open();
+    MaterializeService.updateTextInputs();
   }
 
   public onAddPosition(): void {
+    this.positionId = null;
+    this.form.reset();
     this.modal.open();
+    MaterializeService.updateTextInputs();
   }
 
   public onCancel(): void {
@@ -70,21 +81,40 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       category: this.categoryId,
     };
 
-    this.positionService.create(newPosition).subscribe(
-      (position: Position): void => {
-        MaterializeService.toast('Position was created');
-        this.positions.push(position);
-      },
-      (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
-      (): void => {
-        this.modal.close();
-        this.form.reset({
-          name: '',
-          cost: 1,
-        });
-        this.form.enable();
-      },
-    );
+
+
+    if (this.positionId) {
+      this.positionService.update(newPosition).subscribe(
+        (position: Position): void => {
+          MaterializeService.toast('Changes saved');
+        },
+        (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
+        (): void => {
+          this.modal.close();
+          this.form.reset({
+            name: '',
+            cost: 1,
+          });
+          this.form.enable();
+        },
+      );
+    } else {
+      this.positionService.create(newPosition).subscribe(
+        (position: Position): void => {
+          MaterializeService.toast('Position was created');
+          this.positions.push(position);
+        },
+        (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
+        (): void => {
+          this.modal.close();
+          this.form.reset({
+            name: '',
+            cost: 1,
+          });
+          this.form.enable();
+        },
+      );
+    }
   }
 
   public onDeletePosition(position: Position): void {
