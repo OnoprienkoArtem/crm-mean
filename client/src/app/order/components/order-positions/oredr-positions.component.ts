@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './order-positions.component.html',
   styleUrls: ['./order-positions.component.scss']
 })
-export class OrderPositionsComponent implements OnInit {
+export class OredrPositionsComponent implements OnInit {
 
   constructor() { }
 
