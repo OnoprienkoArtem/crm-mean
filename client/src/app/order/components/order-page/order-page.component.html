@@ -1,6 +1,11 @@
 <div class="page-title">
-  <h4>Order</h4>
-  <button class="waves-effect btn grey darken-1 modal-trigger" data-target="explore-order">
+  <h4 *ngIf="isRoot">Order</h4>
+  <h4 *ngIf="!isRoot">
+    <a routerLink="/order">Order</a>
+    <i class="material-icons">keyboard_arrow_right</i>
+    Add position
+  </h4>
+  <button class="waves-effect btn grey darken-1">
     Complete
   </button>
 </div>
