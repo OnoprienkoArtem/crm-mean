@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { OrderService } from '@app/core/services/order.service';
 import { MaterializeModalInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
 
 @Component({
@@ -13,7 +14,10 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('modal') modalRef: ElementRef;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private orderService: OrderService,
+  ) { }
 
   ngOnInit(): void {
     this.isRoot = this.router.url === '/order';

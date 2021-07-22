@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { OrderPageComponent, OrderCategoriesComponent, OredrPositionsComponent } from '@app/order/components';
+import { OrderCategoriesComponent, OredrPositionsComponent } from '@app/order/components';
+import { OrderPageComponent } from '@app/order/components/order-page/order-page.component';
 
 const routes: Routes = [
   {
