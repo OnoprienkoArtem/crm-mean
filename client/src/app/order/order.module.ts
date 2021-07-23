@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { OrderRoutingModule } from '@app/order/order-routing.module';
 
-import { OrderPageComponent, OrderCategoriesComponent, OredrPositionsComponent } from '@app/order/components';
+import { OrderCategoriesComponent, OredrPositionsComponent } from '@app/order/components';
+import { OrderPageComponent } from '@app/order/components/order-page/order-page.component';
 import { SharedModule } from '@app/shared';
 
 
