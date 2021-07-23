@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { PositionsService } from '@app/core/services';
+import { Position } from '@app/shared/interfaces';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-oredr-positions',
@@ -7,7 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OredrPositionsComponent implements OnInit {
 
-  constructor() { }
+  public positions$: Observable<Position[]>
+
+  constructor(
+    private route: ActivatedRoute,
+    private positionsService: PositionsService,
+  ) { }
 
   ngOnInit(): void {
   }
