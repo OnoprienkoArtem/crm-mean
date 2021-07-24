@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { PositionsService } from '@app/core/services';
 import { Position } from '@app/shared/interfaces';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-oredr-positions',
@@ -19,6 +20,14 @@ export class OredrPositionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.positions$ = this.route.params.pipe(
+      switchMap((params: Params): Observable<Position[]> => {
+        return this.positionsService.fetch(params['id']);
+      }),
+    )
   }
 
+  public addToOrder(position: Position): void {
+
+  }
 }
