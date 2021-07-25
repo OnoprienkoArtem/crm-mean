@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { PositionsService } from '@app/core/services';
+import { OrderService, PositionsService } from '@app/core/services';
 import { Position } from '@app/shared/interfaces';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -17,6 +17,7 @@ export class OredrPositionsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private positionsService: PositionsService,
+    private orderService: OrderService,
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +35,6 @@ export class OredrPositionsComponent implements OnInit {
   }
 
   public addToOrder(position: Position): void {
-
+    this.orderService.add(position);
   }
 }
