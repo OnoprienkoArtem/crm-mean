@@ -9,7 +9,8 @@ export class OrderService {
   public positionList: OrderPosition[] = [];
   public total: number = 0;
 
-  constructor() { }
+  constructor() {
+  }
 
   add(position: Position) {
     const orderPosition: OrderPosition = Object.assign({}, {
@@ -18,7 +19,17 @@ export class OrderService {
       quantity: position.quantity,
       _id: position._id,
     });
-    this.positionList.push(orderPosition);
+    const candidate = this.positionList.find((position: OrderPosition): boolean => {
+      return position._id === orderPosition._id;
+    });
+
+    if (candidate && candidate.quantity && orderPosition.quantity) {
+      candidate.quantity += orderPosition.quantity;
+    } else {
+      this.positionList.push(orderPosition);
+    }
+
+
 
   }
 
