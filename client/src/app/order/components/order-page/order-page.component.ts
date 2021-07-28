@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { OrderService } from '@app/core/services/order.service';
+import { OrderPosition } from '@app/shared/interfaces';
 import { MaterializeModalInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
 
 @Component({
@@ -26,8 +27,6 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isRoot = this.router.url === '/order';
       }
     });
-
-
   }
 
   ngOnDestroy(): void {
@@ -48,5 +47,9 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public submit(): void {
     this.modal.close();
+  }
+
+  public removePosition(orderPosition: OrderPosition): void {
+    this.orderService.remove(orderPosition);
   }
 }

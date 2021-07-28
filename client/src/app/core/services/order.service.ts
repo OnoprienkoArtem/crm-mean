@@ -31,8 +31,10 @@ export class OrderService {
     this.computePrice();
   }
 
-  public remove() {
-
+  public remove(orderPosition: OrderPosition) {
+    const idx =  this.positionList.findIndex((position: OrderPosition): boolean => position._id === orderPosition._id);
+    this.positionList.splice(idx, 1);
+    this.computePrice();
   }
 
   public clear() {
