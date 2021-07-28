@@ -28,16 +28,20 @@ export class OrderService {
     } else {
       this.positionList.push(orderPosition);
     }
+    this.computePrice();
+  }
 
-
+  public remove() {
 
   }
 
-  remove() {
+  public clear() {
 
   }
 
-  clear() {
-
+  private computePrice(): void {
+    this.total = this.positionList.reduce((total: number, item: OrderPosition): number => {
+      return item.quantity ? total += item.quantity * item.cost : total;
+    }, 0);
   }
 }
