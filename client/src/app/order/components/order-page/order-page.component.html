@@ -5,7 +5,11 @@
     <i class="material-icons">keyboard_arrow_right</i>
     Add position
   </h4>
-  <button class="waves-effect btn grey darken-1" (click)="openModal()">
+  <button
+    class="waves-effect btn grey darken-1"
+    (click)="openModal()"
+    [disabled]="orderService.positionList.length === 0"
+  >
     Complete
   </button>
 </div>
@@ -45,6 +49,7 @@
       Cancel
     </button>
     <button
+      [disabled]="orderService.positionList.length === 0"
       class="modal-action btn waves-effect"
       (click)="submit()"
     >
