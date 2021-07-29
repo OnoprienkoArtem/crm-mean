@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { OrderService } from '@app/core/services/order.service';
-import { OrderPosition } from '@app/shared/interfaces';
+import { OrderService, OrdersService } from '@app/core/services';
+import { Order, OrderPosition } from '@app/shared/interfaces';
 import { MaterializeModalInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
 
 @Component({
   selector: 'app-order-page',
   templateUrl: './order-page.component.html',
-  styleUrls: ['./order-page.component.scss']
+  styleUrls: [ './order-page.component.scss' ]
 })
 export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   public isRoot: boolean;
@@ -18,7 +18,9 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private router: Router,
     public orderService: OrderService,
-  ) { }
+    public ordersService: OrdersService,
+  ) {
+  }
 
   ngOnInit(): void {
     this.isRoot = this.router.url === '/order';
@@ -47,6 +49,19 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public submit(): void {
     this.modal.close();
+
+    const order: Order = {
+      list: this.orderService.positionList.map((item: OrderPosition): OrderPosition => {
+        delete item._id;
+        return item;
+      }),
+    };
+
+    this.ordersService.create(order).subscribe(
+      (newOrder: Order): void => MaterializeService.toast(`Order #${ newOrder.order } was added.`),
+      error => MaterializeService.toast(error.error.message),
+      () => this.modal.close(),
+    );
   }
 
   public removePosition(orderPosition: OrderPosition): void {

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { OrderPosition, Position } from '@app/shared/interfaces';
+import { Order, OrderPosition, Position } from '@app/shared/interfaces';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
