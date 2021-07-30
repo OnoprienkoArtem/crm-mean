@@ -39,7 +39,8 @@ export class OrderService {
   }
 
   public clear() {
-
+    this.positionList = [];
+    this.total = 0;
   }
 
   private computePrice(): void {

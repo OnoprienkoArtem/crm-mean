@@ -43,13 +43,14 @@
   </div>
   <div class="modal-footer">
     <button
+      [disabled]="pending"
       class="modal-action waves-effect waves-black btn-flat"
       (click)="cancel()"
     >
       Cancel
     </button>
     <button
-      [disabled]="orderService.positionList.length === 0"
+      [disabled]="orderService.positionList.length === 0 || pending"
       class="modal-action btn waves-effect"
       (click)="submit()"
     >

@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { OrderService, OrdersService } from '@app/core/services';
 import { Order, OrderPosition } from '@app/shared/interfaces';
 import { MaterializeModalInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order-page',
@@ -12,6 +13,9 @@ import { MaterializeModalInstance, MaterializeService } from '@app/shared/materi
 export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   public isRoot: boolean;
   public modal: MaterializeModalInstance;
+  public pending: boolean = false;
+
+  private orderSub: Subscription;
 
   @ViewChild('modal') modalRef: ElementRef;
 
@@ -33,6 +37,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.modal.destroy();
+    this.orderSub.unsubscribe();
   }
 
   ngAfterViewInit(): void {
@@ -48,7 +53,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public submit(): void {
-    this.modal.close();
+    this.pending = true;
 
     const order: Order = {
       list: this.orderService.positionList.map((item: OrderPosition): OrderPosition => {
@@ -57,10 +62,16 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
       }),
     };
 
-    this.ordersService.create(order).subscribe(
-      (newOrder: Order): void => MaterializeService.toast(`Order #${ newOrder.order } was added.`),
+    this.orderSub = this.ordersService.create(order).subscribe(
+      (newOrder: Order): void => {
+        MaterializeService.toast(`Order #${ newOrder.order } was added.`);
+        this.orderService.clear();
+      },
       error => MaterializeService.toast(error.error.message),
-      () => this.modal.close(),
+      () => {
+        this.modal.close();
+        this.pending = false;
+      },
     );
   }
 
