@@ -13,7 +13,7 @@ export class OrderService {
   constructor() {
   }
 
-  add(position: Position) {
+  public add(position: Position) {
     const orderPosition: OrderPosition = Object.assign({}, {
       name: position.name,
       cost: position.cost,
