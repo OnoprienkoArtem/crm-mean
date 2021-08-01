@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { NavigationEnd, Router } from '@angular/router';
 import { OrderService, OrdersService } from '@app/core/services';
 import { Order, OrderPosition } from '@app/shared/interfaces';
-import { MaterializeModalInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
+import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   public isRoot: boolean;
-  public modal: MaterializeModalInstance;
+  public modal: MaterializeInstance;
   public pending: boolean = false;
 
   private orderSub: Subscription;

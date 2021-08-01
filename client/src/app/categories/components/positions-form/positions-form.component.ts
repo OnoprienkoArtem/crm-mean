@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PositionsService } from '@app/core/services';
 import { ModalConfirmComponent } from '@app/shared/components';
 import { Message, Position } from '@app/shared/interfaces';
-import { MaterializeModalInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
+import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, tap } from 'rxjs/operators';
 
@@ -26,7 +26,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
   public positions: Position[] = [];
   public loading: boolean = false;
   public positionId: string | undefined | null;
-  public modal: MaterializeModalInstance;
+  public modal: MaterializeInstance;
   public form: FormGroup;
 
   @Input() categoryId: string;
