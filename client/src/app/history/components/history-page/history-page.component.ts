@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./history-page.component.scss']
 })
 export class HistoryPageComponent implements OnInit {
+  public isFilterVisible: boolean = false;
 
   constructor() { }
 
