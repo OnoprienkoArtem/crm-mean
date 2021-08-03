@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HistoryRoutingModule } from '@app/history/history-routing.module';
 
 import { HistoryPageComponent, HistoryListComponent, HistoryFilterComponent } from '@app/history/components';
+import { SharedModule } from '@app/shared';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { HistoryPageComponent, HistoryListComponent, HistoryFilterComponent } fr
   ],
   imports: [
     CommonModule,
-    HistoryRoutingModule
+    HistoryRoutingModule,
+    SharedModule,
   ]
 })
 export class HistoryModule { }

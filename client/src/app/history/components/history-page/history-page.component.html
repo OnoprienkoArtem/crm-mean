@@ -17,7 +17,16 @@
 <app-history-list [orders]="orders"></app-history-list>
 
 <div class="center mb2">
-  <button class="btn waves-effect grey darken-1 btn-small">Load else</button>
+  <button
+    class="btn waves-effect grey darken-1 btn-small"
+    (click)="loadMore()"
+    *ngIf="!loading; else loader"
+  >
+    Load else
+  </button>
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
 </div>
 
 

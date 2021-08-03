@@ -16,6 +16,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   public offset: number = 0;
   public limit: number = STEP;
   public orders: Order[] = [];
+  public loading: boolean = false;
 
   private tooltip: MaterializeInstance;
   private orderSubscription: Subscription;
@@ -37,14 +38,20 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tooltip = MaterializeService.initTooltip(this.tooltipRef);
   }
 
+  public loadMore(): void {
+    this.offset += STEP;
+    this.loading = true;
+    this.fetch();
+  }
+
   private fetch(): void {
     const params = {
       offset: this.offset,
       limit: this.limit,
     }
     this.orderSubscription = this.ordersService.fetch(params).subscribe((orders: Order[]): void => {
-      this.orders = orders;
+      this.orders = this.orders.concat(orders);
+      this.loading = false;
     });
   }
-
 }
