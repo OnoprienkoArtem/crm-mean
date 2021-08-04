@@ -18,6 +18,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   public orders: Order[] = [];
   public loading: boolean = false;
   public reloading: boolean = false;
+  public noMoreOrders: boolean = false;
 
   private tooltip: MaterializeInstance;
   private orderSubscription: Subscription;
@@ -53,6 +54,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.orderSubscription = this.ordersService.fetch(params).subscribe((orders: Order[]): void => {
       this.orders = this.orders.concat(orders);
+      this.noMoreOrders = orders.length < STEP;
       this.loading = false;
       this.reloading = false;
     });
