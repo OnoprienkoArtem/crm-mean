@@ -17,6 +17,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   public limit: number = STEP;
   public orders: Order[] = [];
   public loading: boolean = false;
+  public reloading: boolean = false;
 
   private tooltip: MaterializeInstance;
   private orderSubscription: Subscription;
@@ -26,6 +27,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private ordersService: OrdersService) { }
 
   ngOnInit(): void {
+    this.reloading = true;
     this.fetch();
   }
 
@@ -52,6 +54,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.orderSubscription = this.ordersService.fetch(params).subscribe((orders: Order[]): void => {
       this.orders = this.orders.concat(orders);
       this.loading = false;
+      this.reloading = false;
     });
   }
 }
