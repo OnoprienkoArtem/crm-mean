@@ -12,8 +12,8 @@
   <tbody>
   <tr *ngFor="let order of orders">
     <td>{{order.order}}</td>
-    <td>{{order.date}}</td>
-    <td>{{order.date}}</td>
+    <td>{{order.date | date:'dd.MM.yyyy'}}</td>
+    <td>{{order.date | date:'HH:mm:ss'}}</td>
     <td>12 211 руб.</td>
     <td>
       <button class="btn btn-small grey darken-1">
