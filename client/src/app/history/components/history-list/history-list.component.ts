@@ -1,18 +1,27 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Order, OrderPosition } from '@app/shared/interfaces';
+import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
 
 @Component({
   selector: 'app-history-list',
   templateUrl: './history-list.component.html',
   styleUrls: ['./history-list.component.scss']
 })
-export class HistoryListComponent implements OnInit {
+export class HistoryListComponent implements OnDestroy, AfterViewInit  {
+  public selectedOrder: Order;
+
+  private modal: MaterializeInstance;
 
   @Input() orders: Order[];
 
-  constructor() { }
+  @ViewChild('modal') modalRef: ElementRef;
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.modal.destroy();
+  }
+
+  ngAfterViewInit(): void {
+    this.modal = MaterializeService.initModal(this.modalRef);
   }
 
   public computeTotal(order: Order): number {
@@ -21,4 +30,12 @@ export class HistoryListComponent implements OnInit {
     }, 0)
   }
 
+  public selectOrder(order: Order): void {
+    this.selectedOrder = order;
+    this.modal.open();
+  }
+
+  public closeModal(): void {
+    this.modal.close();
+  }
 }

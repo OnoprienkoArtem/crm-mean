@@ -37,7 +37,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.modal.destroy();
-    this.orderSub.unsubscribe();
+    this.orderSub?.unsubscribe();
   }
 
   ngAfterViewInit(): void {
