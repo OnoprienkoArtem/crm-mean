@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Order } from '@app/shared/interfaces';
+import { Order, OrderPosition } from '@app/shared/interfaces';
 
 @Component({
   selector: 'app-history-list',
@@ -13,6 +13,12 @@ export class HistoryListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  public computeTotal(order: Order): number {
+    return order.list.reduce((total: number, item: OrderPosition): number => {
+      return total += item.quantity! * item.cost;
+    }, 0)
   }
 
 }
