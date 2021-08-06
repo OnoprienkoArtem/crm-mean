@@ -7,7 +7,7 @@ import { MaterializeInstance, MaterializeService } from '@app/shared/materialize
   templateUrl: './history-list.component.html',
   styleUrls: ['./history-list.component.scss']
 })
-export class HistoryListComponent implements OnDestroy, AfterViewInit  {
+export class HistoryListComponent implements OnDestroy, AfterViewInit {
   public selectedOrder: Order;
 
   private modal: MaterializeInstance;

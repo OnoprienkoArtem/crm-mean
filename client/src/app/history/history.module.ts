@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { HistoryRoutingModule } from '@app/history/history-routing.module';
 
@@ -17,6 +18,7 @@ import { SharedModule } from '@app/shared';
     CommonModule,
     HistoryRoutingModule,
     SharedModule,
+    FormsModule,
   ]
 })
 export class HistoryModule { }
