@@ -4,3 +4,4 @@ export * from './Category';
 export * from './Position';
 export * from './Order';
 export * from './OrderPosition';
+export * from './Filter';

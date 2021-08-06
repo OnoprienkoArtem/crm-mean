@@ -1,6 +1,7 @@
+import { EventData } from '@angular/cdk/testing';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { OrdersService } from '@app/core/services';
-import { Order } from '@app/shared/interfaces';
+import { Filter, Order } from '@app/shared/interfaces';
 import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
 import { Subscription } from 'rxjs';
 
@@ -39,6 +40,10 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.tooltip = MaterializeService.initTooltip(this.tooltipRef);
+  }
+
+  public applyFilter(filter: Filter): void {
+
   }
 
   public loadMore(): void {
