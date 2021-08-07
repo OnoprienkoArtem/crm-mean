@@ -6,13 +6,15 @@ import { HistoryRoutingModule } from '@app/history/history-routing.module';
 
 import { HistoryPageComponent, HistoryListComponent, HistoryFilterComponent } from '@app/history/components';
 import { SharedModule } from '@app/shared';
+import { HistoryOrderModalComponent } from './components/history-order-modal/history-order-modal.component';
 
 
 @NgModule({
   declarations: [
     HistoryPageComponent,
     HistoryListComponent,
-    HistoryFilterComponent
+    HistoryFilterComponent,
+    HistoryOrderModalComponent
   ],
   imports: [
     CommonModule,

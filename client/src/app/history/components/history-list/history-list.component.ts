@@ -1,41 +1,37 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { HistoryOrderModalComponent } from '@app/history/components/history-order-modal';
 import { Order, OrderPosition } from '@app/shared/interfaces';
-import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
 
 @Component({
   selector: 'app-history-list',
   templateUrl: './history-list.component.html',
-  styleUrls: ['./history-list.component.scss']
+  styleUrls: [ './history-list.component.scss' ]
 })
-export class HistoryListComponent implements OnDestroy, AfterViewInit {
-  public selectedOrder: Order;
-
-  private modal: MaterializeInstance;
+export class HistoryListComponent implements OnInit {
+  private componentFactory: any;
 
   @Input() orders: Order[];
 
-  @ViewChild('modal') modalRef: ElementRef;
-
-  ngOnDestroy(): void {
-    this.modal.destroy();
+  constructor(
+    private viewContainerRef: ViewContainerRef,
+    private componentFactoryResolver: ComponentFactoryResolver,
+  ) {
   }
 
-  ngAfterViewInit(): void {
-    this.modal = MaterializeService.initModal(this.modalRef);
+  ngOnInit(): void {
+    const resolver = this.componentFactoryResolver.resolveComponentFactory(HistoryOrderModalComponent);
+    this.componentFactory = this.viewContainerRef.createComponent(resolver);
   }
 
   public computeTotal(order: Order): number {
     return order.list.reduce((total: number, item: OrderPosition): number => {
       return total += item.quantity! * item.cost;
-    }, 0)
+    }, 0);
   }
 
   public selectOrder(order: Order): void {
-    this.selectedOrder = order;
-    this.modal.open();
-  }
-
-  public closeModal(): void {
-    this.modal.close();
+    const dynamicComponent: HistoryOrderModalComponent = this.componentFactory.instance;
+    dynamicComponent.selectedOrder = order;
+    dynamicComponent.modal.open();
   }
 }
