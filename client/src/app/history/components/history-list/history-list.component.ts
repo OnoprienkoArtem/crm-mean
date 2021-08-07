@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { HistoryOrderModalComponent } from '@app/history/components/history-order-modal';
-import { Order, OrderPosition } from '@app/shared/interfaces';
+import { Order } from '@app/shared/interfaces';
 
 @Component({
   selector: 'app-history-list',
@@ -21,12 +21,6 @@ export class HistoryListComponent implements OnInit {
   ngOnInit(): void {
     const resolver = this.componentFactoryResolver.resolveComponentFactory(HistoryOrderModalComponent);
     this.componentFactory = this.viewContainerRef.createComponent(resolver);
-  }
-
-  public computeTotal(order: Order): number {
-    return order.list.reduce((total: number, item: OrderPosition): number => {
-      return total += item.quantity! * item.cost;
-    }, 0);
   }
 
   public selectOrder(order: Order): void {
