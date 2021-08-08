@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { Filter } from '@app/shared/interfaces';
-import { MaterializeService } from '@app/shared/materialize/materialize.service';
+import { MaterializeDatepicker, MaterializeService } from '@app/shared/materialize/materialize.service';
 
 @Component({
   selector: 'app-history-filter',
@@ -19,6 +19,8 @@ import { MaterializeService } from '@app/shared/materialize/materialize.service'
 export class HistoryFilterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public order: number;
+
+  private start: MaterializeDatepicker;
 
   @Output() onFilter = new EventEmitter<Filter>();
 
@@ -31,10 +33,14 @@ export class HistoryFilterComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   ngAfterViewInit(): void {
-
+    this.start = MaterializeService.initDatepicker(this.startRef, this.validate.bind(this));
   }
 
   ngOnDestroy(): void {
+    this.start.destroy();
+  }
+
+  public validate(): void {
 
   }
 
