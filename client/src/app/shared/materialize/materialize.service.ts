@@ -8,6 +8,10 @@ export interface MaterializeInstance {
   destroy(): void;
 }
 
+export interface MaterializeDatepicker extends MaterializeInstance {
+  date?: Date;
+}
+
 export class MaterializeService {
   static toast(message: string): void {
     M.toast({ html: message });
@@ -27,5 +31,13 @@ export class MaterializeService {
 
   static initTooltip(ref: ElementRef): MaterializeInstance {
     return M.Tooltip.init(ref.nativeElement);
+  }
+
+  static initDatepicker(ref: ElementRef, onClose: () => void): MaterializeDatepicker {
+    return M.Datepicker.init(ref.nativeElement, {
+      format: 'dd.mm.yyyy',
+      showClearBtn: true,
+      onClose,
+    });
   }
 }
