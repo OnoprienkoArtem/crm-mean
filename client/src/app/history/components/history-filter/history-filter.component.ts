@@ -19,12 +19,15 @@ import { MaterializeDatepicker, MaterializeService } from '@app/shared/materiali
 export class HistoryFilterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public order: number;
+  public isValid: boolean = true;
 
   private start: MaterializeDatepicker;
+  private end: MaterializeDatepicker;
 
   @Output() onFilter = new EventEmitter<Filter>();
 
   @ViewChild('start') startRef: ElementRef;
+  @ViewChild('end') endRef: ElementRef;
 
   constructor() {
   }
@@ -34,14 +37,21 @@ export class HistoryFilterComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngAfterViewInit(): void {
     this.start = MaterializeService.initDatepicker(this.startRef, this.validate.bind(this));
+    this.end = MaterializeService.initDatepicker(this.endRef, this.validate.bind(this));
   }
 
   ngOnDestroy(): void {
     this.start.destroy();
+    this.end.destroy();
   }
 
   public validate(): void {
+    if (!this.start.date || !this.end.date) {
+      this.isValid = true;
+      return;
+    }
 
+    this.isValid = this.start.date < this.end.date;
   }
 
   public submitFilter(): void {
