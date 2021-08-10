@@ -1,4 +1,3 @@
-import { EventData } from '@angular/cdk/testing';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { OrdersService } from '@app/core/services';
 import { Filter, Order } from '@app/shared/interfaces';
@@ -20,6 +19,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   public loading: boolean = false;
   public reloading: boolean = false;
   public noMoreOrders: boolean = false;
+  public filter: Filter = {};
 
   private tooltip: MaterializeInstance;
   private orderSubscription: Subscription;
@@ -43,7 +43,11 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public applyFilter(filter: Filter): void {
-
+    this.orders = [];
+    this.offset = 0;
+    this.filter = filter;
+    this.reloading = true;
+    this.fetch();
   }
 
   public loadMore(): void {
@@ -53,10 +57,10 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private fetch(): void {
-    const params = {
+    const params = Object.assign({}, this.filter, {
       offset: this.offset,
       limit: this.limit,
-    }
+    });
     this.orderSubscription = this.ordersService.fetch(params).subscribe((orders: Order[]): void => {
       this.orders = this.orders.concat(orders);
       this.noMoreOrders = orders.length < STEP;
