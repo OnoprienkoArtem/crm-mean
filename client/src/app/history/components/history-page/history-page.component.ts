@@ -28,6 +28,10 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private ordersService: OrdersService) { }
 
+  public get isFilter(): boolean {
+    return Object.keys(this.filter).length !== 0;
+  }
+
   ngOnInit(): void {
     this.reloading = true;
     this.fetch();

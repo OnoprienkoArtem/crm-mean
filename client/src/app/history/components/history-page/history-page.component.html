@@ -5,7 +5,10 @@
     class="btn btn-small js-filter tooltipped"
     data-tooltip="Open filter"
     data-position="left"
-    [ngClass]="{'active': isFilterVisible}"
+    [ngClass]="{
+      'active': isFilterVisible,
+      'red': isFilter
+    }"
     #tooltip
   >
     <i class="material-icons">filter_list</i>
