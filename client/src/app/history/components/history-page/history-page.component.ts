@@ -2,10 +2,10 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { OrdersService } from '@app/core/services';
 import { Filter, Order } from '@app/shared/interfaces';
 import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
-const STEP: number = 2;
+const STEP: number = 3;
 
 @Component({
   selector: 'app-history-page',
@@ -24,7 +24,6 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private ordersLength: number;
   private tooltip: MaterializeInstance;
-  private orderSubscription: Subscription;
 
   @ViewChild('tooltip') tooltipRef: ElementRef;
 
@@ -41,7 +40,6 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.tooltip.destroy();
-    this.orderSubscription.unsubscribe();
   }
 
   ngAfterViewInit(): void {
