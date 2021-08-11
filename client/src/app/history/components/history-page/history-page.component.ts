@@ -2,7 +2,8 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { OrdersService } from '@app/core/services';
 import { Filter, Order } from '@app/shared/interfaces';
 import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 
 const STEP: number = 2;
 
@@ -21,6 +22,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   public noMoreOrders: boolean = false;
   public filter: Filter = {};
 
+  private ordersLength: number;
   private tooltip: MaterializeInstance;
   private orderSubscription: Subscription;
 
@@ -65,11 +67,21 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
       offset: this.offset,
       limit: this.limit,
     });
-    this.orderSubscription = this.ordersService.fetch(params).subscribe((orders: Order[]): void => {
-      this.orders = this.orders.concat(orders);
-      this.noMoreOrders = orders.length < STEP;
-      this.loading = false;
-      this.reloading = false;
-    });
+
+    this.ordersService.fetch().pipe(
+      take(1),
+      map((orders: Order[]): number => this.ordersLength = orders.length),
+      switchMap((): Observable<Order[]> => this.ordersService.fetch(params)),
+      tap((orders: Order[]): void => {
+        this.orders = this.orders.concat(orders);
+        this.noMoreOrders = this.hideLoadMoreButton();
+          this.loading = false;
+        this.reloading = false;
+      })
+    ).subscribe();
+  }
+
+  private hideLoadMoreButton(): boolean {
+    return this.orders.length === this.ordersLength;
   }
 }
