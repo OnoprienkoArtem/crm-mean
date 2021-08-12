@@ -33,8 +33,8 @@ app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/category', categoryRoutes);
-app.use('/api/order', orderRoutes);
-app.use('/api/position', positionRoutes);
+app.use('/api/order', passport.authenticate('jwt', {session: false}), orderRoutes);
+app.use('/api/position', passport.authenticate('jwt', {session: false}), positionRoutes);
 
 
 
