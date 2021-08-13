@@ -13,6 +13,11 @@ export async function overview(req, res) {
     const ordersPerDay = (totalOrdersNumber / daysNumber).toFixed(0);
     const ordersPercent = (((yesterdayOrdersNumber / ordersPerDay) - 1) * 100).toFixed(2);
     const totalGain = calculatePrice(allOrders);
+    const gainPerDay = totalGain / daysNumber;
+    const yesterdayGain = calculatePrice(yesterdayOrders);
+    const gainPercent = (((yesterdayGain / gainPerDay) - 1) * 100).toFixed(2);
+    const compareGain = (yesterdayGain - gainPerDay).toFixed(2);
+    const compareNumber = (yesterdayOrdersNumber - ordersPerDay).toFixed(2);
 
   } catch (e) {
     errorHandler(res, e);
