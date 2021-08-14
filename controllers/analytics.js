@@ -19,10 +19,23 @@ export async function overview(req, res) {
     const compareGain = (yesterdayGain - gainPerDay).toFixed(2);
     const compareNumber = (yesterdayOrdersNumber - ordersPerDay).toFixed(2);
 
+    res.status(200).json({
+      gain: {
+        percent: Math.abs(+gainPercent),
+        compare: Math.abs(+compareGain),
+        yesterday: Math.abs(+yesterdayGain),
+        isHigher: +gainPercent > 0,
+      },
+      orders: {
+        percent: Math.abs(+ordersPercent),
+        compare: Math.abs(+compareNumber),
+        yesterday: Math.abs(+yesterdayOrdersNumber),
+        isHigher: +ordersPercent > 0,
+      }
+    });
   } catch (e) {
     errorHandler(res, e);
   }
-  res.status(200).json()
 }
 
 export async function analytics(req, res) {
