@@ -15,12 +15,13 @@ export class OverviewPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public overviewData$: Observable<Analytics>;
   public tapTarget: MaterializeInstance;
-
+  public yesterday: Date = new Date;
 
   constructor(private analyticsService: AnalyticsService) { }
 
   ngOnInit(): void {
     this.overviewData$ = this.analyticsService.getOverview();
+    this.yesterday.setDate(this.yesterday.getDate() - 1);
   }
 
   ngOnDestroy(): void {
