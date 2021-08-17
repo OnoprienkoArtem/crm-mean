@@ -1,11 +1,10 @@
 export interface Analytics {
-  orders: AnalyticsItem;
-  gain: AnalyticsItem;
+  average: number;
+  chart: AnalyticsChartItem;
 }
 
-interface AnalyticsItem {
-  percent: number;
-  compare: number;
-  yesterday: number;
-  isHigher: boolean;
+export interface AnalyticsChartItem {
+  gain: number;
+  order: number;
+  label: string;
 }

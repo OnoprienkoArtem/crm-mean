@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AnalyticsService } from '@app/core/services';
-import { Analytics } from '@app/shared/interfaces';
+import { Overview } from '@app/shared/interfaces';
 import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ export class OverviewPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('tapTarget') tapTargetRef: ElementRef;
 
-  public overviewData$: Observable<Analytics>;
+  public overviewData$: Observable<Overview>;
   public tapTarget: MaterializeInstance;
   public yesterday: Date = new Date;
 

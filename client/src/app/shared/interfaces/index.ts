@@ -5,4 +5,5 @@ export * from './Position';
 export * from './Order';
 export * from './OrderPosition';
 export * from './Filter';
+export * from './Overview';
 export * from './Analytics';
