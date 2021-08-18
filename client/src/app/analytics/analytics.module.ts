@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AnalyticsRoutingModule } from '@app/analytics/analytics-routing.module';
 
 import { AnalyticsPageComponent } from '@app/analytics/components';
+import { SharedModule } from '@app/shared';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { AnalyticsPageComponent } from '@app/analytics/components';
   ],
   imports: [
     CommonModule,
-    AnalyticsRoutingModule
+    AnalyticsRoutingModule,
+    SharedModule,
   ]
 })
 export class AnalyticsModule { }

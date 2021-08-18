@@ -2,16 +2,21 @@
   <h4>Analytics</h4>
 </div>
 
-<div class="average-price">
-  <p>Average price <strong>{{average}}$</strong></p>
+<div [style.display]="pending ? 'none' : 'block'">
+  <div class="average-price">
+    <p>Average price <strong>{{average}}$</strong></p>
+  </div>
+
+  <div class="analytics-block pb3">
+    <h5>Gain</h5>
+    <canvas #gain></canvas>
+  </div>
+
+  <div class="analytics-block">
+    <h5>Orders</h5>
+    <canvas #orders></canvas>
+  </div>
 </div>
 
-<div class="analytics-block pb3">
-  <h5>Gain</h5>
-  <canvas #gain></canvas>
-</div>
+<app-loader *ngIf="pending"></app-loader>
 
-<div class="analytics-block">
-  <h5>Orders</h5>
-  <canvas #orders></canvas>
-</div>
