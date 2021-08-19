@@ -1,6 +1,6 @@
 export interface Analytics {
   average: number;
-  chart: AnalyticsChartItem;
+  chart: AnalyticsChartItem[];
 }
 
 export interface AnalyticsChartItem {
