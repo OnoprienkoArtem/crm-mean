@@ -19,28 +19,47 @@ export class AnalyticsPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild('gain') gainRef: ElementRef;
   @ViewChild('orders') ordersRef: ElementRef;
 
-  constructor(private analyticsService: AnalyticsService) {}
+  constructor(private analyticsService: AnalyticsService) {
+    Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
+  }
 
   ngAfterViewInit(): void {
+    this.analyticsSub = this.analyticsService.getAnalytics().subscribe((data: Analytics) => {
+      this.average = data.average;
+      this.createGainChart(data);
+      this.createOrdersChart(data);
+      this.pending = false;
+    });
+  }
+
+  private createGainChart(data: Analytics): void {
     const gainConfig: any = {
       label: 'Gain',
       color: 'rgb(255, 99, 132)',
     }
 
-    this.analyticsSub = this.analyticsService.getAnalytics().subscribe((data: Analytics) => {
-      this.average = data.average;
+    gainConfig.labels = data.chart.map(item => item.label);
+    gainConfig.data = data.chart.map(item => item.gain);
 
-      gainConfig.labels = data.chart.map(item => item.label);
-      gainConfig.data = data.chart.map(item => item.gain);
+    const gainCtx = this.gainRef.nativeElement.getContext('2d');
+    gainCtx.canvas.height = '300px';
 
-      const gainCtx = this.gainRef.nativeElement.getContext('2d');
-      gainCtx.canvas.height = '300px';
+    new Chart(gainCtx, AnalyticsPageComponent.createChartConfig(gainConfig));
+  }
 
-      Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
-      new Chart(gainCtx, AnalyticsPageComponent.createChartConfig(gainConfig));
+  private createOrdersChart(data: Analytics): void {
+    const orderConfig: any = {
+      label: 'Orders',
+      color: 'rgb(54, 162, 235)',
+    }
 
-      this.pending = false;
-    });
+    orderConfig.labels = data.chart.map(item => item.label);
+    orderConfig.data = data.chart.map(item => item.order);
+
+    const orderCtx = this.ordersRef.nativeElement.getContext('2d');
+    orderCtx.canvas.height = '300px';
+
+    new Chart(orderCtx, AnalyticsPageComponent.createChartConfig(orderConfig));
   }
 
   ngOnDestroy(): void {
