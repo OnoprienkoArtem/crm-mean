@@ -10,7 +10,7 @@ const STEP: number = 3;
 @Component({
   selector: 'app-history-page',
   templateUrl: './history-page.component.html',
-  styleUrls: ['./history-page.component.scss']
+  styleUrls: [ './history-page.component.scss' ]
 })
 export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   public isFilterVisible: boolean = false;
@@ -27,7 +27,8 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('tooltip') tooltipRef: ElementRef;
 
-  constructor(private ordersService: OrdersService) { }
+  constructor(private ordersService: OrdersService) {
+  }
 
   public get isFilter(): boolean {
     return Object.keys(this.filter).length !== 0;
@@ -73,7 +74,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
       tap((orders: Order[]): void => {
         this.orders = this.orders.concat(orders);
         this.noMoreOrders = this.hideLoadMoreButton();
-          this.loading = false;
+        this.loading = false;
         this.reloading = false;
       })
     ).subscribe();

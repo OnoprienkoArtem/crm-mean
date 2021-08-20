@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { OrderRoutingModule } from '@app/order/order-routing.module';
 
-import { OrderCategoriesComponent, OredrPositionsComponent } from '@app/order/components';
+import { OrderCategoriesComponent, OredrPositionsComponent, OrderCompleteModalComponent } from '@app/order/components';
 import { OrderPageComponent } from '@app/order/components/order-page/order-page.component';
 import { SharedModule } from '@app/shared';
 
@@ -14,6 +14,7 @@ import { SharedModule } from '@app/shared';
     OrderPageComponent,
     OrderCategoriesComponent,
     OredrPositionsComponent,
+    OrderCompleteModalComponent,
   ],
   imports: [
     CommonModule,

@@ -1,32 +1,37 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewContainerRef } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { OrderService, OrdersService } from '@app/core/services';
-import { Order, OrderPosition } from '@app/shared/interfaces';
-import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
-import { Subscription } from 'rxjs';
+import { OrderService } from '@app/core/services';
+import { OrderCompleteModalComponent } from '@app/order/components/order-complete-modal';
 
 @Component({
   selector: 'app-order-page',
   templateUrl: './order-page.component.html',
   styleUrls: [ './order-page.component.scss' ]
 })
-export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
+export class OrderPageComponent implements OnInit {
   public isRoot: boolean;
-  public modal: MaterializeInstance;
-  public pending: boolean = false;
 
-  private orderSub: Subscription;
-
-  @ViewChild('modal') modalRef: ElementRef;
+  private componentFactory: any;
 
   constructor(
-    private router: Router,
     public orderService: OrderService,
-    public ordersService: OrdersService,
+    private router: Router,
+    private viewContainerRef: ViewContainerRef,
+    private componentFactoryResolver: ComponentFactoryResolver,
   ) {
   }
 
   ngOnInit(): void {
+    this.checkOnRoot();
+    this.initializeDynamicComponent();
+  }
+
+  public openModal(): void {
+    const dynamicComponent: OrderCompleteModalComponent = this.componentFactory.instance;
+    dynamicComponent.modal.open();
+  }
+
+  private checkOnRoot(): void {
     this.isRoot = this.router.url === '/order';
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -35,47 +40,8 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  ngOnDestroy(): void {
-    this.modal.destroy();
-    this.orderSub?.unsubscribe();
-  }
-
-  ngAfterViewInit(): void {
-    this.modal = MaterializeService.initModal(this.modalRef);
-  }
-
-  public openModal(): void {
-    this.modal.open();
-  }
-
-  public cancel(): void {
-    this.modal.close();
-  }
-
-  public submit(): void {
-    this.pending = true;
-
-    const order: Order = {
-      list: this.orderService.positionList.map((item: OrderPosition): OrderPosition => {
-        delete item._id;
-        return item;
-      }),
-    };
-
-    this.orderSub = this.ordersService.create(order).subscribe(
-      (newOrder: Order): void => {
-        MaterializeService.toast(`Order #${ newOrder.order } was added.`);
-        this.orderService.clear();
-      },
-      error => MaterializeService.toast(error.error.message),
-      () => {
-        this.modal.close();
-        this.pending = false;
-      },
-    );
-  }
-
-  public removePosition(orderPosition: OrderPosition): void {
-    this.orderService.remove(orderPosition);
+  private initializeDynamicComponent(): void {
+    const resolver = this.componentFactoryResolver.resolveComponentFactory(OrderCompleteModalComponent);
+    this.componentFactory = this.viewContainerRef.createComponent(resolver);
   }
 }

@@ -32,6 +32,10 @@ export class AnalyticsPageComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  ngOnDestroy(): void {
+    this.analyticsSub.unsubscribe();
+  }
+
   private createGainChart(data: Analytics): void {
     const gainConfig: any = {
       label: 'Gain',
@@ -60,10 +64,6 @@ export class AnalyticsPageComponent implements AfterViewInit, OnDestroy {
     orderCtx.canvas.height = '300px';
 
     new Chart(orderCtx, AnalyticsPageComponent.createChartConfig(orderConfig));
-  }
-
-  ngOnDestroy(): void {
-    this.analyticsSub.unsubscribe();
   }
 
   private static createChartConfig({labels, data, label, color}: any): ChartConfiguration {

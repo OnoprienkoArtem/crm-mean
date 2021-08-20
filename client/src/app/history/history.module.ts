@@ -3,10 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { HistoryRoutingModule } from '@app/history/history-routing.module';
-
-import { HistoryPageComponent, HistoryListComponent, HistoryFilterComponent } from '@app/history/components';
 import { SharedModule } from '@app/shared';
-import { HistoryOrderModalComponent } from './components/history-order-modal/history-order-modal.component';
+import {
+  HistoryPageComponent,
+  HistoryListComponent,
+  HistoryFilterComponent,
+  HistoryOrderModalComponent,
+} from '@app/history/components';
 
 
 @NgModule({
