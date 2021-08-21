@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './order-complete-modal.component.html',
   styleUrls: [ './order-complete-modal.component.scss' ]
 })
-export class OrderCompleteModalComponent implements OnInit, OnDestroy, AfterViewInit {
+export class OrderCompleteModalComponent implements OnDestroy, AfterViewInit {
   public modal: MaterializeInstance;
   public pending: boolean = false;
 
@@ -21,9 +21,6 @@ export class OrderCompleteModalComponent implements OnInit, OnDestroy, AfterView
     public orderService: OrderService,
     public ordersService: OrdersService,
   ) {
-  }
-
-  ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {

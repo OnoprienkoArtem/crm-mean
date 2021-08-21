@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PositionsService } from '@app/core/services';
 import { Position } from '@app/shared/interfaces';
@@ -11,14 +11,27 @@ import { MaterializeInstance, MaterializeService } from '@app/shared/materialize
   styleUrls: ['./positions-form-modal.component.scss']
 })
 export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDestroy {
+  public positions: Position[] = [];
   public form: FormGroup;
   public modal: MaterializeInstance;
+
+
+
+  @Input() categoryId: string;
+  @Input() positionId: string | undefined | null;
+  @Input() set position(position: Position | null) {
+    this.form.patchValue({
+      name: position?.name,
+      cost: position?.cost,
+    });
+  };
 
   @ViewChild('modal') modalRef: ElementRef;
 
   constructor(private positionService: PositionsService,) { }
 
   ngOnInit(): void {
+
     this.initializeForm();
   }
 
@@ -32,6 +45,7 @@ export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDes
 
   public onCancel(): void {
     this.modal.close();
+    this.form.reset();
   }
 
   public onSubmit(): void {
