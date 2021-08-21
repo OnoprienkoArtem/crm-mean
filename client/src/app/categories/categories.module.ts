@@ -4,7 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CategoriesRoutingModule } from '@app/categories/categories-routing.module';
 
-import { CategoriesPageComponent, CategoriesNewComponent, PositionsFormComponent } from '@app/categories/components';
+import {
+  CategoriesPageComponent,
+  CategoriesNewComponent,
+  PositionsFormComponent,
+  PositionsFormModalComponent,
+} from '@app/categories/components';
 import { SharedModule } from '@app/shared';
 
 
@@ -12,7 +17,8 @@ import { SharedModule } from '@app/shared';
   declarations: [
     CategoriesPageComponent,
     CategoriesNewComponent,
-    PositionsFormComponent
+    PositionsFormComponent,
+    PositionsFormModalComponent
   ],
   imports: [
     CommonModule,
