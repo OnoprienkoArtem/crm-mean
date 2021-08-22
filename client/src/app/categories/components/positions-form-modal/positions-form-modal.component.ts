@@ -14,7 +14,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PositionsService } from '@app/core/services';
 import { Position } from '@app/shared/interfaces';
 import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-positions-form-modal',
@@ -25,7 +24,7 @@ export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDes
   public form: FormGroup;
   public modal: MaterializeInstance;
 
-  @Output() outputEvent: EventEmitter<Position> = new EventEmitter<Position>();
+  @Output() outputEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input() categoryId: string;
   @Input() positionId: string | undefined | null;
@@ -78,23 +77,18 @@ export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDes
 
     if (this.positionId) {
       newPosition._id = this.positionId;
-      this.positionService.update(newPosition).pipe(
-        take(1),
-      ).subscribe(
-        (position: Position): void => {
-          this.outputEvent.emit(position);
-          console.log('');
+      this.positionService.update(newPosition).subscribe(
+        (): void => {
+          this.outputEvent.emit(true);
           MaterializeService.toast('Changes saved');
         },
         (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
         completed,
       );
     } else {
-      this.positionService.create(newPosition).pipe(
-        take(1),
-      ).subscribe(
-        (position: Position): void => {
-          this.outputEvent.emit(position);
+      this.positionService.create(newPosition).subscribe(
+        (): void => {
+          this.outputEvent.emit(true);
           MaterializeService.toast('Position was created');
         },
         (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),

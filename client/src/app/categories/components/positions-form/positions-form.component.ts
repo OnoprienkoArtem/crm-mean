@@ -19,6 +19,8 @@ export class PositionsFormComponent implements OnInit {
   public loading: boolean = false;
   public positionId: string | undefined | null;
 
+  positions$: Observable<Position[]>;
+
   private componentFactory: any;
 
   @Input() categoryId: string;
@@ -32,12 +34,7 @@ export class PositionsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loading = true;
-    this.positionService.fetch(this.categoryId).subscribe((positions: Position[]) => {
-      this.positions = positions;
-      this.loading = false;
-    });
-
+    this.fetchPositions();
     this.initializeDynamicComponent();
   }
 
@@ -47,15 +44,9 @@ export class PositionsFormComponent implements OnInit {
     dynamicComponent.positionId = position._id;
     dynamicComponent.position = position;
 
-    dynamicComponent.outputEvent.subscribe((position: Position): void => {
-      // const idx: number = this.positions.findIndex((p: Position): boolean => p._id === position._id);
-      // this.positions[idx] = position;
-      this.loading = true;
-      this.positionService.fetch(this.categoryId).subscribe((positions: Position[]) => {
-        this.positions = positions;
-        this.loading = false;
-      });
-    });
+    this.positions$ = dynamicComponent.outputEvent.pipe(
+      switchMap((): Observable<Position[]> => this.positionService.fetch(this.categoryId)),
+    );
 
     MaterializeService.updateTextInputs();
     dynamicComponent.modal.open();
@@ -67,16 +58,17 @@ export class PositionsFormComponent implements OnInit {
     dynamicComponent.positionId = null;
     dynamicComponent.position = null;
 
-    dynamicComponent.outputEvent.pipe(
-      take(1),
-    ).subscribe((position: Position): void => {
-      // this.positions.push(position);
-      this.loading = true;
-      this.positionService.fetch(this.categoryId).subscribe((positions: Position[]) => {
-        this.positions = positions;
-        this.loading = false;
-      });
-    });
+    // dynamicComponent.outputEvent.pipe(
+    //   take(1),
+    // ).subscribe((position: Position): void => {
+    //   console.log('Create');
+    //   // this.positions.push(position);
+    //   this.loading = true;
+    //   this.positionService.fetch(this.categoryId).subscribe((positions: Position[]) => {
+    //     this.positions = positions;
+    //     this.loading = false;
+    //   });
+    // });
 
     MaterializeService.updateTextInputs();
     dynamicComponent.modal.open();
@@ -103,6 +95,13 @@ export class PositionsFormComponent implements OnInit {
         return throwError(error.error.message);
       }),
     ).subscribe();
+  }
+
+  private fetchPositions(): void {
+    this.loading = true;
+    this.positions$ = this.positionService.fetch(this.categoryId).pipe(
+      tap((): boolean => this.loading = false),
+    );
   }
 
   private initializeDynamicComponent(): void {
