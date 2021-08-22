@@ -7,12 +7,12 @@ import { ModalConfirmComponent } from '@app/shared/components';
 import { Message, Position } from '@app/shared/interfaces';
 import { MaterializeService } from '@app/shared/materialize/materialize.service';
 import { Observable, throwError } from 'rxjs';
-import { catchError, filter, switchMap, tap } from 'rxjs/operators';
+import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-positions-form',
   templateUrl: './positions-form.component.html',
-  styleUrls: ['./positions-form.component.scss']
+  styleUrls: [ './positions-form.component.scss' ]
 })
 export class PositionsFormComponent implements OnInit {
   public positions: Position[] = [];
@@ -28,7 +28,8 @@ export class PositionsFormComponent implements OnInit {
     private positionService: PositionsService,
     private viewContainerRef: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loading = true;
@@ -47,8 +48,13 @@ export class PositionsFormComponent implements OnInit {
     dynamicComponent.position = position;
 
     dynamicComponent.outputEvent.subscribe((position: Position): void => {
-      const idx: number = this.positions.findIndex((p: Position): boolean => p._id === position._id);
-      this.positions[idx] = position;
+      // const idx: number = this.positions.findIndex((p: Position): boolean => p._id === position._id);
+      // this.positions[idx] = position;
+      this.loading = true;
+      this.positionService.fetch(this.categoryId).subscribe((positions: Position[]) => {
+        this.positions = positions;
+        this.loading = false;
+      });
     });
 
     MaterializeService.updateTextInputs();
@@ -61,8 +67,15 @@ export class PositionsFormComponent implements OnInit {
     dynamicComponent.positionId = null;
     dynamicComponent.position = null;
 
-    dynamicComponent.outputEvent.subscribe((position: Position): void => {
-      this.positions.push(position);
+    dynamicComponent.outputEvent.pipe(
+      take(1),
+    ).subscribe((position: Position): void => {
+      // this.positions.push(position);
+      this.loading = true;
+      this.positionService.fetch(this.categoryId).subscribe((positions: Position[]) => {
+        this.positions = positions;
+        this.loading = false;
+      });
     });
 
     MaterializeService.updateTextInputs();
@@ -73,7 +86,7 @@ export class PositionsFormComponent implements OnInit {
     event.stopPropagation();
     const dialogRef = this.dialog.open(ModalConfirmComponent, {
       data: {
-        text: `Are you sure you want to delete the position ${position.name}?`,
+        text: `Are you sure you want to delete the position ${ position.name }?`,
       },
     });
 

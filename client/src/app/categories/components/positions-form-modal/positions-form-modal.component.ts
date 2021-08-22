@@ -14,6 +14,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PositionsService } from '@app/core/services';
 import { Position } from '@app/shared/interfaces';
 import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-positions-form-modal',
@@ -57,6 +58,7 @@ export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDes
   }
 
   public onSubmit(): void {
+    console.log('submit');
     this.form.disable();
 
     const newPosition: Position = {
@@ -76,7 +78,9 @@ export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDes
 
     if (this.positionId) {
       newPosition._id = this.positionId;
-      this.positionService.update(newPosition).subscribe(
+      this.positionService.update(newPosition).pipe(
+        take(1),
+      ).subscribe(
         (position: Position): void => {
           this.outputEvent.emit(position);
           console.log('');
@@ -86,7 +90,9 @@ export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDes
         completed,
       );
     } else {
-      this.positionService.create(newPosition).subscribe(
+      this.positionService.create(newPosition).pipe(
+        take(1),
+      ).subscribe(
         (position: Position): void => {
           this.outputEvent.emit(position);
           MaterializeService.toast('Position was created');
