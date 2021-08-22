@@ -1,5 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PositionsService } from '@app/core/services';
 import { Position } from '@app/shared/interfaces';
@@ -11,11 +21,10 @@ import { MaterializeInstance, MaterializeService } from '@app/shared/materialize
   styleUrls: ['./positions-form-modal.component.scss']
 })
 export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDestroy {
-  public positions: Position[] = [];
   public form: FormGroup;
   public modal: MaterializeInstance;
 
-
+  @Output() outputEvent: EventEmitter<Position> = new EventEmitter<Position>();
 
   @Input() categoryId: string;
   @Input() positionId: string | undefined | null;
@@ -28,10 +37,9 @@ export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDes
 
   @ViewChild('modal') modalRef: ElementRef;
 
-  constructor(private positionService: PositionsService,) { }
+  constructor(private positionService: PositionsService) { }
 
   ngOnInit(): void {
-
     this.initializeForm();
   }
 
@@ -70,8 +78,8 @@ export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDes
       newPosition._id = this.positionId;
       this.positionService.update(newPosition).subscribe(
         (position: Position): void => {
-          const idx: number = this.positions.findIndex((p: Position): boolean => p._id === position._id);
-          this.positions[idx] = position;
+          this.outputEvent.emit(position);
+          console.log('');
           MaterializeService.toast('Changes saved');
         },
         (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
@@ -80,8 +88,8 @@ export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDes
     } else {
       this.positionService.create(newPosition).subscribe(
         (position: Position): void => {
+          this.outputEvent.emit(position);
           MaterializeService.toast('Position was created');
-          this.positions.push(position);
         },
         (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
         completed,

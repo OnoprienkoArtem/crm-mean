@@ -1,4 +1,4 @@
-<div class="row" *ngIf="positions | async as p">
+<div class="row">
   <div class="col s12">
     <div class="page-subtitle">
       <h4>Positions:</h4>
@@ -10,10 +10,10 @@
       </button>
     </div>
     <div *ngIf="!loading; else loader">
-      <div class="collection" *ngIf="p.length !== 0; else empty">
+      <div class="collection" *ngIf="positions.length !== 0; else empty">
         <a
           class="collection-item collection-item-icon"
-          *ngFor="let position of p"
+          *ngFor="let position of positions"
           (click)="onSelectPosition(position)"
         >
           <span>

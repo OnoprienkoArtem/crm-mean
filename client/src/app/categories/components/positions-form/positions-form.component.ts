@@ -15,7 +15,7 @@ import { catchError, filter, switchMap, tap } from 'rxjs/operators';
   styleUrls: ['./positions-form.component.scss']
 })
 export class PositionsFormComponent implements OnInit {
-  public positions: Observable<Position[]>;
+  public positions: Position[] = [];
   public loading: boolean = false;
   public positionId: string | undefined | null;
 
@@ -31,13 +31,11 @@ export class PositionsFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.loading = true;
-    this.positions = this.positionService.fetch(this.categoryId);
-
-    // this.positionService.fetch(this.categoryId).subscribe((positions: Position[]) => {
-    //   this.positions = positions;
-    //   this.loading = false;
-    // });
+    this.loading = true;
+    this.positionService.fetch(this.categoryId).subscribe((positions: Position[]) => {
+      this.positions = positions;
+      this.loading = false;
+    });
 
     this.initializeDynamicComponent();
   }
@@ -47,6 +45,12 @@ export class PositionsFormComponent implements OnInit {
     dynamicComponent.categoryId = this.categoryId;
     dynamicComponent.positionId = position._id;
     dynamicComponent.position = position;
+
+    dynamicComponent.outputEvent.subscribe((position: Position): void => {
+      const idx: number = this.positions.findIndex((p: Position): boolean => p._id === position._id);
+      this.positions[idx] = position;
+    });
+
     MaterializeService.updateTextInputs();
     dynamicComponent.modal.open();
   }
@@ -56,6 +60,11 @@ export class PositionsFormComponent implements OnInit {
     dynamicComponent.categoryId = this.categoryId;
     dynamicComponent.positionId = null;
     dynamicComponent.position = null;
+
+    dynamicComponent.outputEvent.subscribe((position: Position): void => {
+      this.positions.push(position);
+    });
+
     MaterializeService.updateTextInputs();
     dynamicComponent.modal.open();
   }
@@ -72,8 +81,8 @@ export class PositionsFormComponent implements OnInit {
       filter(Boolean),
       switchMap((): Observable<Message> => this.positionService.delete(position)),
       tap(() => {
-        // const idx: number = this.positions.findIndex((p: Position): boolean => p._id === position._id);
-        // this.positions.splice(idx, 1);
+        const idx: number = this.positions.findIndex((p: Position): boolean => p._id === position._id);
+        this.positions.splice(idx, 1);
       }),
       tap((message: Message): void => MaterializeService.toast(message.message)),
       catchError((error: HttpErrorResponse): Observable<HttpErrorResponse> => {
