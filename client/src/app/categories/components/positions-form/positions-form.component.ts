@@ -15,11 +15,8 @@ import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
   styleUrls: [ './positions-form.component.scss' ]
 })
 export class PositionsFormComponent implements OnInit {
-  public positions: Position[] = [];
   public loading: boolean = false;
-  public positionId: string | undefined | null;
-
-  positions$: Observable<Position[]>;
+  public positions$: Observable<Position[]>;
 
   private componentFactory: any;
 
@@ -39,34 +36,11 @@ export class PositionsFormComponent implements OnInit {
   }
 
   public onSelectPosition(position: Position): void {
-    const dynamicComponent: PositionsFormModalComponent = this.componentFactory.instance;
-    dynamicComponent.categoryId = this.categoryId;
-    dynamicComponent.positionId = position._id;
-    dynamicComponent.position = position;
-
-
-    dynamicComponent.outputEvent.pipe(
-      take(1),
-      tap((): void => this.fetchPositions()),
-    ).subscribe();
-
-    MaterializeService.updateTextInputs();
-    dynamicComponent.modal.open();
+    this.adjustPositions(position);
   }
 
   public onAddPosition(): void {
-    const dynamicComponent: PositionsFormModalComponent = this.componentFactory.instance;
-    dynamicComponent.categoryId = this.categoryId;
-    dynamicComponent.positionId = null;
-    dynamicComponent.position = null;
-
-    dynamicComponent.outputEvent.pipe(
-      take(1),
-      tap((): void => this.fetchPositions()),
-    ).subscribe();
-
-    MaterializeService.updateTextInputs();
-    dynamicComponent.modal.open();
+    this.adjustPositions(null);
   }
 
   public onDeletePosition(event: Event, position: Position): void {
@@ -87,6 +61,21 @@ export class PositionsFormComponent implements OnInit {
         return throwError(error.error.message);
       }),
     ).subscribe();
+  }
+
+  private adjustPositions(position: Position | null): void {
+    const dynamicComponent: PositionsFormModalComponent = this.componentFactory.instance;
+    dynamicComponent.categoryId = this.categoryId;
+    dynamicComponent.positionId = position?._id;
+    dynamicComponent.position = position;
+
+    dynamicComponent.outputEvent.pipe(
+      take(1),
+      tap((): void => this.fetchPositions()),
+    ).subscribe();
+
+    MaterializeService.updateTextInputs();
+    dynamicComponent.modal.open();
   }
 
   private fetchPositions(): void {
