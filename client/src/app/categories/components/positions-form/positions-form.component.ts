@@ -44,9 +44,11 @@ export class PositionsFormComponent implements OnInit {
     dynamicComponent.positionId = position._id;
     dynamicComponent.position = position;
 
-    this.positions$ = dynamicComponent.outputEvent.pipe(
-      switchMap((): Observable<Position[]> => this.positionService.fetch(this.categoryId)),
-    );
+
+    dynamicComponent.outputEvent.pipe(
+      take(1),
+      tap((): void => this.fetchPositions()),
+    ).subscribe();
 
     MaterializeService.updateTextInputs();
     dynamicComponent.modal.open();
@@ -58,17 +60,10 @@ export class PositionsFormComponent implements OnInit {
     dynamicComponent.positionId = null;
     dynamicComponent.position = null;
 
-    // dynamicComponent.outputEvent.pipe(
-    //   take(1),
-    // ).subscribe((position: Position): void => {
-    //   console.log('Create');
-    //   // this.positions.push(position);
-    //   this.loading = true;
-    //   this.positionService.fetch(this.categoryId).subscribe((positions: Position[]) => {
-    //     this.positions = positions;
-    //     this.loading = false;
-    //   });
-    // });
+    dynamicComponent.outputEvent.pipe(
+      take(1),
+      tap((): void => this.fetchPositions()),
+    ).subscribe();
 
     MaterializeService.updateTextInputs();
     dynamicComponent.modal.open();
@@ -85,10 +80,7 @@ export class PositionsFormComponent implements OnInit {
     dialogRef.afterClosed().pipe(
       filter(Boolean),
       switchMap((): Observable<Message> => this.positionService.delete(position)),
-      tap(() => {
-        const idx: number = this.positions.findIndex((p: Position): boolean => p._id === position._id);
-        this.positions.splice(idx, 1);
-      }),
+      tap((): void => this.fetchPositions()),
       tap((message: Message): void => MaterializeService.toast(message.message)),
       catchError((error: HttpErrorResponse): Observable<HttpErrorResponse> => {
         MaterializeService.toast(error.error.message);
