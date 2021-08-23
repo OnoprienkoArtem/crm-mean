@@ -15,7 +15,7 @@ import { PositionsService } from '@app/core/services';
 import { Position } from '@app/shared/interfaces';
 import { MaterializeInstance, MaterializeService } from '@app/shared/materialize/materialize.service';
 import { Observable, throwError } from 'rxjs';
-import { catchError, finalize, take } from 'rxjs/operators';
+import { catchError, finalize, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-positions-form-modal',
@@ -59,7 +59,6 @@ export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDes
   }
 
   public onSubmit(): void {
-    console.log('submit');
     this.form.disable();
 
     const newPosition: Position = {
@@ -81,31 +80,25 @@ export class PositionsFormModalComponent implements OnInit, AfterViewInit, OnDes
       newPosition._id = this.positionId;
       this.positionService.update(newPosition).pipe(
         take(1),
-      ).subscribe(
-        (): void => {
-          this.outputEvent.emit(true);
-          MaterializeService.toast('Changes saved');
-        },
-        (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
-        completed,
-      );
+        tap((): void => this.outputEvent.emit(true)),
+        tap((): void => MaterializeService.toast('Changes saved')),
+        catchError((error: HttpErrorResponse): Observable<HttpErrorResponse> => {
+          MaterializeService.toast(error.error.message);
+          return throwError(error.error.message);
+        }),
+        finalize(completed),
+      ).subscribe();
     } else {
       this.positionService.create(newPosition).pipe(
         take(1),
+        tap((): void => this.outputEvent.emit(true)),
         tap((): void => MaterializeService.toast('Position was created')),
         catchError((error: HttpErrorResponse): Observable<HttpErrorResponse> => {
           MaterializeService.toast(error.error.message);
           return throwError(error.error.message);
         }),
         finalize(completed),
-      ).subscribe(
-        (): void => {
-          this.outputEvent.emit(true);
-          MaterializeService.toast('Position was created');
-        },
-        (error: HttpErrorResponse): void => MaterializeService.toast(error.error.message),
-        completed,
-      );
+      ).subscribe();
     }
   }
 

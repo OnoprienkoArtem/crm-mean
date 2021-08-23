@@ -35,14 +35,6 @@ export class PositionsFormComponent implements OnInit {
     this.initializeDynamicComponent();
   }
 
-  public onSelectPosition(position: Position): void {
-    this.adjustPositions(position);
-  }
-
-  public onAddPosition(): void {
-    this.adjustPositions(null);
-  }
-
   public onDeletePosition(event: Event, position: Position): void {
     event.stopPropagation();
     const dialogRef = this.dialog.open(ModalConfirmComponent, {
@@ -61,6 +53,14 @@ export class PositionsFormComponent implements OnInit {
         return throwError(error.error.message);
       }),
     ).subscribe();
+  }
+
+  public onSelectPosition(position: Position): void {
+    this.adjustPositions(position);
+  }
+
+  public onAddPosition(): void {
+    this.adjustPositions(null);
   }
 
   private adjustPositions(position: Position | null): void {
